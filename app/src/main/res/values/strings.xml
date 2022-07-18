@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">WebAnt Trainee</string>
+    <string name="placeholder_no_internet">Placeholder no internet</string>
+    <string name="no_internet_header">Oh shucks!</string>
+    <string name="no_internet_description">Slow or no internet connection. \nPlease check your internet settings</string>
 </resources>
