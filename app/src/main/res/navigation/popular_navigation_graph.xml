@@ -7,15 +7,15 @@
 
     <fragment
         android:id="@+id/popular_fragment"
-        android:name="com.example.webanttrainee.PopularFragment"
+        android:name="com.example.webanttrainee.ContentFragment"
         android:label="Popular"
-        tools:layout="@layout/fragment_popular">
+        tools:layout="@layout/content_fragment">
         <action
             android:id="@+id/action_popularFragment2_to_descriptionItemPopularFragment"
             app:destination="@id/descriptionItemPopularFragment" />
     </fragment>
     <fragment
         android:id="@+id/descriptionItemPopularFragment"
-        android:name="com.example.webanttrainee.DescriptionItemPopularFragment"
-        tools:layout="@layout/fragment_description_item_popular" />
+        android:name="com.example.webanttrainee.DescriptionPopularFragment"
+        tools:layout="@layout/popular_description_fragment" />
 </navigation>

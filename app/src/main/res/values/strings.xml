@@ -5,4 +5,6 @@
     <string name="no_internet_description">Slow or no internet connection. \nPlease check your internet settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="item_new">New</string>
+    <string name="item_popular">Popular</string>
 </resources>

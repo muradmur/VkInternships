@@ -7,15 +7,15 @@
 
     <fragment
         android:id="@+id/newFragment"
-        android:name="com.example.webanttrainee.NewFragment"
+        android:name="com.example.webanttrainee.ContentFragment"
         android:label="New"
-        tools:layout="@layout/fragment_new">
+        tools:layout="@layout/content_fragment">
         <action
             android:id="@+id/action_newFragment_to_descriptionItemNewFragment"
             app:destination="@id/descriptionItemNewFragment" />
     </fragment>
     <fragment
         android:id="@+id/descriptionItemNewFragment"
-        android:name="com.example.webanttrainee.DescriptionItemNewFragment"
-        tools:layout="@layout/fragment_description_item_new" />
+        android:name="com.example.webanttrainee.DescriptionNewFragment"
+        tools:layout="@layout/new_description_fragment" />
 </navigation>
