@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newFragment"
-        android:name="com.example.webanttrainee.ContentFragment"
+        android:name="com.example.webanttrainee.ui.NewFragment"
         android:label="New"
         tools:layout="@layout/content_fragment">
         <action
@@ -16,6 +16,6 @@
     </fragment>
     <fragment
         android:id="@+id/descriptionItemNewFragment"
-        android:name="com.example.webanttrainee.DescriptionNewFragment"
+        android:name="com.example.webanttrainee.ui.DescriptionNewFragment"
         tools:layout="@layout/new_description_fragment" />
 </navigation>

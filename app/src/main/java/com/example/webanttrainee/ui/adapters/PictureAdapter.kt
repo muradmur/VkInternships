@@ -1,10 +1,11 @@
-package com.example.webanttrainee
+package com.example.webanttrainee.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.webanttrainee.R
 
 
 class PictureAdapter :
