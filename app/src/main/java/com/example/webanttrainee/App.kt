@@ -39,6 +39,8 @@ class App: Application() {
     }
 
     companion object{
+        const val MEDIA_URL = "https://gallery.prod1.webant.ru/api/media/"
+        const val ARG_DATA = "ARG_DATA"
         const val BASE_URL = "https://gallery.prod1.webant.ru"
     }
 }

@@ -11,7 +11,7 @@
         android:label="Popular"
         tools:layout="@layout/content_fragment">
         <action
-            android:id="@+id/action_popularFragment2_to_descriptionItemPopularFragment"
+            android:id="@+id/action_popularFragment_to_descriptionPopularFragment"
             app:destination="@id/descriptionItemPopularFragment" />
     </fragment>
     <fragment
