@@ -4,6 +4,6 @@ import androidx.fragment.app.Fragment
 import com.example.webanttrainee.R
 
 
-class DescriptionNewFragment : Fragment(R.layout.new_description_fragment) {
+class DescriptionNewFragment : Fragment() {
 
 }

@@ -1,15 +1,16 @@
 package com.example.webanttrainee.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.R
+import com.example.webanttrainee.model.PictureList
+import com.example.webanttrainee.ui.viewholders.PictureViewHolder
 
 
-class PictureAdapter :
-    RecyclerView.Adapter<PictureAdapter.PictureViewHolder>() {
+class PictureAdapter(
+    private val pictureList: PictureList
+): RecyclerView.Adapter<PictureViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -18,18 +19,8 @@ class PictureAdapter :
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.onBind(pictureList.result[position])
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
-
-    inner class PictureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val previewPicture: ImageView = itemView.findViewById(R.id.ivPreview)
-
-        fun onBind() {
-
-        }
-    }
+    override fun getItemCount(): Int = pictureList.result.size
 }

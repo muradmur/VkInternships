@@ -17,5 +17,5 @@
     <fragment
         android:id="@+id/descriptionItemNewFragment"
         android:name="com.example.webanttrainee.ui.DescriptionNewFragment"
-        tools:layout="@layout/new_description_fragment" />
+        tools:layout="@layout/picture_description_fragment" />
 </navigation>
