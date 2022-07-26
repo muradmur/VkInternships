@@ -35,15 +35,14 @@ class NewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fetchPictureList((activity?.application as App).pictureApi, true)
-        fetchPictureList((activity?.application as App).pictureApi, false)
+        fetchPictureList((activity?.application as App).pictureApi)
     }
 
-    private fun fetchPictureList(newApi: PictureApi?, pictureStatus: Boolean) {
+    private fun fetchPictureList(newApi: PictureApi?) {
 
         val compositeDisposable = CompositeDisposable()
         newApi?.let {
-            newApi.getPicture(pictureStatus)
+            newApi.getPicture(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
