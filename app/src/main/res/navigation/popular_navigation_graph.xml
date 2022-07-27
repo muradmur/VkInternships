@@ -16,6 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/descriptionItemPopularFragment"
-        android:name="com.example.webanttrainee.ui.DescriptionPopularFragment"
-        tools:layout="@layout/popular_description_fragment" />
+        android:name="com.example.webanttrainee.ui.DescriptionFragment"
+        tools:layout="@layout/description_fragment"
+        android:label=""/>
 </navigation>

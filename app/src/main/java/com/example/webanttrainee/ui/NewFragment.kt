@@ -39,9 +39,7 @@ class NewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fetchPictureList((activity?.application as App).pictureApi)
-
     }
 
     private fun fetchPictureList(newApi: PictureApi?) {
@@ -67,8 +65,8 @@ class NewFragment : Fragment() {
         }
     }
 
-    private fun onFailure(`throw`: Throwable?){
-        Toast.makeText(requireContext(), `throw`?.toString(), Toast.LENGTH_LONG).show()
+    private fun onFailure(_throw: Throwable?){
+        Toast.makeText(requireContext(), _throw?.toString(), Toast.LENGTH_LONG).show()
     }
 
     private val newClickListener = object: ItemClickListener<Data>{
@@ -76,6 +74,5 @@ class NewFragment : Fragment() {
             findNavController().navigate(R.id.action_newFragment_to_descriptionNewFragment,
             bundleOf(ARG_DATA to value))
         }
-
     }
 }

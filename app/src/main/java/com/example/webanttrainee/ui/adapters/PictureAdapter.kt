@@ -17,7 +17,7 @@ class PictureAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.picture_preview_item, parent, false)
+            .inflate(R.layout.picture_item, parent, false)
         return PictureViewHolder(view)
     }
 
