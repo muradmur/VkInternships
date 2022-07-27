@@ -21,9 +21,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class PopularFragment: Fragment() {
+class PopularFragment : Fragment() {
 
     private lateinit var binding: ContentFragmentBinding
+
+    override fun onStart() {
+        super.onStart()
+        fetchPictureList((activity?.application as App).pictureApi)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +43,10 @@ class PopularFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fetchPictureList((activity?.application as App).pictureApi)
+        binding.refreshLayout.setOnRefreshListener {
+            fetchPictureList((activity?.application as App).pictureApi)
+            binding.refreshLayout.isRefreshing = false
+        }
     }
 
     private fun fetchPictureList(newApi: PictureApi?) {
@@ -59,16 +67,17 @@ class PopularFragment: Fragment() {
     private fun onResponse(response: PictureList) {
         with(binding.recycler) {
             layoutManager =
-                GridLayoutManager(requireContext(),2, GridLayoutManager.VERTICAL, false)
-            adapter = PictureAdapter(response, popularClickListener).apply { notifyDataSetChanged() }
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            adapter =
+                PictureAdapter(response, popularClickListener).apply { notifyDataSetChanged() }
         }
     }
 
-    private fun onFailure(`throw`: Throwable?){
+    private fun onFailure(`throw`: Throwable?) {
         Toast.makeText(requireContext(), `throw`?.toString(), Toast.LENGTH_LONG).show()
     }
 
-    private val popularClickListener = object: ItemClickListener<Data> {
+    private val popularClickListener = object : ItemClickListener<Data> {
         override fun onClick(value: Data) {
             findNavController().navigate(
                 R.id.action_popularFragment_to_descriptionPopularFragment,

@@ -28,6 +28,11 @@ class NewFragment : Fragment() {
 
     private lateinit var binding: ContentFragmentBinding
 
+    override fun onStart() {
+        super.onStart()
+        fetchPictureList((activity?.application as App).pictureApi)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +44,9 @@ class NewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchPictureList((activity?.application as App).pictureApi)
+        binding.refreshLayout.setOnRefreshListener {
+            fetchPictureList((activity?.application as App).pictureApi)
+        }
     }
 
     private fun fetchPictureList(newApi: PictureApi?) {
