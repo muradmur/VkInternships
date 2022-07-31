@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.webanttrainee.App
+import com.example.webanttrainee.App.Companion.ARG_DATA
 import com.example.webanttrainee.ItemClickListener
 import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ContentFragmentBinding
@@ -42,7 +43,6 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.refreshLayout.setOnRefreshListener {
             fetchPictureList((activity?.application as App).pictureApi)
             binding.refreshLayout.isRefreshing = false
@@ -53,7 +53,7 @@ class PopularFragment : Fragment() {
 
         val compositeDisposable = CompositeDisposable()
         newApi?.let {
-            newApi.getPicture(false)
+            newApi.getPicture(false, 1, 8)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -66,10 +66,8 @@ class PopularFragment : Fragment() {
 
     private fun onResponse(response: PictureList) {
         with(binding.recycler) {
-            layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
             adapter =
-                PictureAdapter(response, popularClickListener).apply { notifyDataSetChanged() }
+                PictureAdapter(popularClickListener).apply { notifyDataSetChanged() }
         }
     }
 
@@ -81,7 +79,7 @@ class PopularFragment : Fragment() {
         override fun onClick(value: Data) {
             findNavController().navigate(
                 R.id.action_popularFragment_to_descriptionPopularFragment,
-                bundleOf(App.ARG_DATA to value)
+                bundleOf(ARG_DATA to value)
             )
         }
     }

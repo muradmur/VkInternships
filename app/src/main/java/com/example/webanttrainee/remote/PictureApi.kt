@@ -7,5 +7,9 @@ import retrofit2.http.Query
 
 interface PictureApi {
     @GET("/api/photos")
-    fun getPicture(@Query("new") pictureStatus: Boolean): Single<PictureList>
+    fun getPicture(
+        @Query("new") isNew: Boolean,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+    ): Single<PictureList>
 }

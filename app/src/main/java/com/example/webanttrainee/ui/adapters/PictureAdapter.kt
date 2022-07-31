@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.ItemClickListener
 import com.example.webanttrainee.R
 import com.example.webanttrainee.model.Data
-import com.example.webanttrainee.model.PictureList
 import com.example.webanttrainee.ui.viewholders.PictureViewHolder
 
 
 class PictureAdapter(
-    private val pictureList: PictureList,
     private val itemListener: ItemClickListener<Data>
-): RecyclerView.Adapter<PictureViewHolder>() {
+) : RecyclerView.Adapter<PictureViewHolder>() {
+
+    private var list = ArrayList<Data>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -22,12 +22,22 @@ class PictureAdapter(
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
-        holder.onBind(pictureList.result[position])
+        holder.onBind(list[position])
 
         holder.itemView.setOnClickListener {
-            itemListener.onClick(pictureList.result[position])
+            itemListener.onClick(list[position])
         }
     }
 
-    override fun getItemCount(): Int = pictureList.result.size
+    override fun getItemCount(): Int = list.size
+
+    fun clear() {
+        list.clear()
+        notifyDataSetChanged()
+    }
+
+    fun addItems(items: ArrayList<Data>) {
+        list.addAll(items)
+        notifyDataSetChanged()
+    }
 }
