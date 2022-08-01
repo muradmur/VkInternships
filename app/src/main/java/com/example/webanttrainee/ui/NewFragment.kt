@@ -50,13 +50,15 @@ class NewFragment : Fragment() {
     private var page = 1
     private var limit = 12
     var isLoading = false
-    var totalPage = 2
+
+    // инициализируется в getImages и нужна, чтобы при прокрутке вверх не было прогресс бара
+    private var totalPage = 1
 
     override fun onStart() {
         super.onStart()
 
         getImages(false)
-        initRecyclerView()
+        initRecycler()
     }
 
     override fun onCreateView(
@@ -81,19 +83,27 @@ class NewFragment : Fragment() {
         }
     }
 
-    private fun onRefresh() {
+    override fun onPause() {
+        super.onPause()
         pictureAdapter.clear()
         page = 1
-        getImages(true)
-        binding.refreshLayout.isRefreshing = false
+        isLoading = false
+        binding.progressbar.isVisible = false
     }
 
-    private fun initRecyclerView() {
+    private fun initRecycler() {
         with(binding.recycler) {
             pictureAdapter = PictureAdapter(newClickListener)
             adapter = pictureAdapter.apply { notifyDataSetChanged() }
             layoutManager = myLayoutManager
         }
+    }
+
+    private fun onRefresh() {
+        pictureAdapter.clear()
+        page = 1
+        getImages(true)
+        binding.refreshLayout.isRefreshing = false
     }
 
     private fun getImages(isRefreshing: Boolean) {
@@ -118,6 +128,7 @@ class NewFragment : Fragment() {
 
     private fun onResponse(response: PictureList) {
         pictureAdapter.addItems(response.result as ArrayList<Data>)
+        totalPage = response.countOfPages
         isLoading = false
         binding.progressbar.isVisible = false
     }
@@ -129,31 +140,24 @@ class NewFragment : Fragment() {
         Toast.makeText(requireContext(), _throw?.toString(), Toast.LENGTH_LONG).show()
     }
 
-    private fun onScrollListener(): RecyclerView.OnScrollListener {
-        return object : RecyclerView.OnScrollListener() {
+    private fun onScrollListener() = object : RecyclerView.OnScrollListener() {
 
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
 
-                val visibleItemCount = recyclerView.layoutManager?.childCount
-                val pastVisibleItem = myLayoutManager.findFirstCompletelyVisibleItemPosition()
-                val total = binding.recycler.adapter?.itemCount
+            val visibleItemCount = recyclerView.layoutManager?.childCount
+            val pastVisibleItem = myLayoutManager.findFirstCompletelyVisibleItemPosition()
+            val total = binding.recycler.adapter?.itemCount
 
-                Log.d(
-                    "counts",
-                    "visibleItemCount = $visibleItemCount, pastVisibleItem = $pastVisibleItem, total = $total"
-                )
-
-                if (!isLoading && page < totalPage) {
-                    if (visibleItemCount != null) {
-                        if ((visibleItemCount + pastVisibleItem) >= total!!) {
-                            page++
-                            getImages(false)
-                        }
+            if (!isLoading && page < totalPage) {
+                if (visibleItemCount != null) {
+                    if ((visibleItemCount + pastVisibleItem) >= total!!) {
+                        page++
+                        getImages(false)
                     }
                 }
-                super.onScrolled(recyclerView, dx, dy)
             }
+            super.onScrolled(recyclerView, dx, dy)
         }
     }
 }
