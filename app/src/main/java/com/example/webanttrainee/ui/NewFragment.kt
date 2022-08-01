@@ -2,7 +2,6 @@ package com.example.webanttrainee.ui
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -88,7 +87,7 @@ class NewFragment : Fragment() {
         pictureAdapter.clear()
         page = 1
         isLoading = false
-        binding.progressbar.isVisible = false
+        binding.customProgressBar.isVisible = false
     }
 
     private fun initRecycler() {
@@ -108,7 +107,7 @@ class NewFragment : Fragment() {
 
     private fun getImages(isRefreshing: Boolean) {
         isLoading = true
-        if (!isRefreshing) binding.progressbar.isVisible = true
+        if (!isRefreshing) binding.customProgressBar.isVisible = true
 
         Completable.timer(3, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
             .subscribe {
@@ -130,12 +129,12 @@ class NewFragment : Fragment() {
         pictureAdapter.addItems(response.result as ArrayList<Data>)
         totalPage = response.countOfPages
         isLoading = false
-        binding.progressbar.isVisible = false
+        binding.customProgressBar.isVisible = false
     }
 
     private fun onFailure(_throw: Throwable?) {
         isLoading = false
-        binding.progressbar.isVisible = false
+        binding.customProgressBar.isVisible = false
         binding.refreshLayout.isRefreshing = false
         Toast.makeText(requireContext(), _throw?.toString(), Toast.LENGTH_LONG).show()
     }

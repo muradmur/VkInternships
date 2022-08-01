@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1603717026378897" />
+        <entry key="../../Android/Sdk/platforms/android-32/data/res/drawable/ratingbar_indicator_material.xml" value="0.2585" />
         <entry key="..\:/Users/05mur/AndroidStudioProjects/WebAntTrainee/app/src/main/res/drawable/bottom_item_color.xml" value="0.125" />
         <entry key="..\:/Users/05mur/AndroidStudioProjects/WebAntTrainee/app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.1965" />
         <entry key="..\:/Users/05mur/AndroidStudioProjects/WebAntTrainee/app/src/main/res/layout/activity_main.xml" value="0.136" />
@@ -19,8 +20,19 @@
         <entry key="..\:/Users/05mur/AndroidStudioProjects/WebAntTrainee/app/src/main/res/layout/placeholder_no_internet.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/05mur/AndroidStudioProjects/WebAntTrainee/app/src/main/res/menu/bottom_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/05mur/AndroidStudioProjects/WebAntTrainee/app/src/main/res/menu/nav_menu.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/drawable/custom_loading_bar.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/gradient.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_progress_bar.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/ic_spiner.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/path_morph.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/progress_bar.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/rotation.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/test.xml" value="0.2585" />
+        <entry key="app/src/main/res/drawable/test2.xml" value="0.2585" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/content_fragment.xml" value="0.1921875" />
+        <entry key="app/src/main/res/layout/content_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/description_fragment.xml" value="0.2105978260869565" />
         <entry key="app/src/main/res/layout/new_description_fragment.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/picture_description.xml" value="0.33" />
         <entry key="app/src/main/res/layout/picture_description_fragment.xml" value="0.34479166666666666" />
