@@ -22,7 +22,6 @@ import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.model.PictureList
 import com.example.webanttrainee.remote.PictureApi
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -49,14 +48,12 @@ class NewFragment : Fragment() {
     private var page = 1
     private var limit = 12
     var isLoading = false
-
     // инициализируется в getImages и нужна, чтобы при прокрутке вверх не было прогресс бара
     private var totalPage = 1
 
     override fun onStart() {
         super.onStart()
-
-        getImages(false)
+        getImages()
         initRecycler()
     }
 
@@ -66,9 +63,7 @@ class NewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = ContentFragmentBinding.inflate(layoutInflater, container, false)
-
         myLayoutManager = GridLayoutManager(this.context, 2, GridLayoutManager.VERTICAL, false)
-
         binding.recycler.addOnScrollListener(onScrollListener())
         return binding.root
     }
@@ -101,28 +96,26 @@ class NewFragment : Fragment() {
     private fun onRefresh() {
         pictureAdapter.clear()
         page = 1
-        getImages(true)
+        getImages()
         binding.refreshLayout.isRefreshing = false
     }
 
-    private fun getImages(isRefreshing: Boolean) {
+    private fun getImages() {
         isLoading = true
-        if (!isRefreshing) binding.customProgressBar.isVisible = true
+        binding.customProgressBar.isVisible = true
 
-        Completable.timer(3, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .subscribe {
-                val compositeDisposable = CompositeDisposable()
-                api.let {
-                    api.getPicture(true, page, limit)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            onResponse(it)
-                        }, {
-                            onFailure(it)
-                        }).let(compositeDisposable::add)
-                }
-            }
+        val compositeDisposable = CompositeDisposable()
+        api.let {
+            api.getPicture(true, page, limit)
+                .subscribeOn(Schedulers.io())
+                .delay(3, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    onResponse(it)
+                }, {
+                    onFailure(it)
+                }).let(compositeDisposable::add)
+        }
     }
 
     private fun onResponse(response: PictureList) {
@@ -152,7 +145,7 @@ class NewFragment : Fragment() {
                 if (visibleItemCount != null) {
                     if ((visibleItemCount + pastVisibleItem) >= total!!) {
                         page++
-                        getImages(false)
+                        getImages()
                     }
                 }
             }

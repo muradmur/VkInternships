@@ -21,7 +21,6 @@ import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.model.PictureList
 import com.example.webanttrainee.remote.PictureApi
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -32,12 +31,10 @@ class PopularFragment : Fragment() {
     private lateinit var binding: ContentFragmentBinding
     private lateinit var pictureAdapter: PictureAdapter
     private lateinit var myLayoutManager: LinearLayoutManager
-
     private var page = 1
     private var totalPage = 1
     private var limit = 12
     private var isLoading = false
-
     private val api: PictureApi
         get() = (activity?.application as App).pictureApi
 
@@ -52,9 +49,8 @@ class PopularFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         initRecycler()
-        getImages(false)
+        getImages()
     }
 
     override fun onCreateView(
@@ -62,7 +58,6 @@ class PopularFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         myLayoutManager = GridLayoutManager(this.context, 2, GridLayoutManager.VERTICAL, false)
         binding = ContentFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -70,7 +65,6 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.recycler.addOnScrollListener(onScrollListener())
         binding.refreshLayout.setOnRefreshListener {
             onRefresh()
@@ -93,12 +87,11 @@ class PopularFragment : Fragment() {
             val visibleItemCount = recyclerView.layoutManager?.childCount
             val pastVisibleItem = myLayoutManager.findFirstCompletelyVisibleItemPosition()
             val total = binding.recycler.adapter?.itemCount
-
             if (!isLoading && page < totalPage) {
                 if (visibleItemCount != null) {
                     if ((visibleItemCount + pastVisibleItem) >= total!!) {
                         page++
-                        getImages(false)
+                        getImages()
                     }
                 }
             }
@@ -109,7 +102,7 @@ class PopularFragment : Fragment() {
     private fun onRefresh() {
         pictureAdapter.clear()
         page = 1
-        getImages(true)
+        getImages()
         binding.refreshLayout.isRefreshing = false
     }
 
@@ -121,24 +114,21 @@ class PopularFragment : Fragment() {
         }
     }
 
-    private fun getImages(isRefreshing: Boolean) {
+    private fun getImages() {
         isLoading = true
-        if (!isRefreshing) binding.customProgressBar.isVisible = true
-
-        Completable.timer(3, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .subscribe {
-                val compositeDisposable = CompositeDisposable()
-                api.let {
-                    api.getPicture(false, page, limit)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            onResponse(it)
-                        }, {
-                            onFailure(it)
-                        }).let(compositeDisposable::add)
-                }
-            }
+        binding.customProgressBar.isVisible = true
+        val compositeDisposable = CompositeDisposable()
+        api.let {
+            api.getPicture(false, page, limit)
+                .subscribeOn(Schedulers.io())
+                .delay(3, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    onResponse(it)
+                }, {
+                    onFailure(it)
+                }).let(compositeDisposable::add)
+        }
     }
 
     private fun onResponse(response: PictureList) {
