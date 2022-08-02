@@ -1,7 +1,9 @@
 package com.example.webanttrainee.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.ItemClickListener
 import com.example.webanttrainee.R
@@ -37,7 +39,13 @@ class PictureAdapter(
     }
 
     fun addItems(items: ArrayList<Data>) {
+        val oldList = list.toList()
         list.addAll(items)
-        notifyDataSetChanged()
+        val newList = list.toList()
+
+        Log.d("lists", "oldItem size = ${oldList.size} vs newItem size = ${newList.size}")
+        val diffResult: DiffUtil.DiffResult =
+            DiffUtil.calculateDiff(PictureDiffUtilCallback(oldList, newList))
+        diffResult.dispatchUpdatesTo(this)
     }
 }

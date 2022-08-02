@@ -2,6 +2,7 @@ package com.example.webanttrainee.ui
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,8 +54,8 @@ class NewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        Log.d("tag", "I'm here")
         getImages()
-        initRecycler()
     }
 
     override fun onCreateView(
@@ -62,12 +63,14 @@ class NewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("tag", "onCreateView")
+
         binding = ContentFragmentBinding.inflate(layoutInflater, container, false)
         myLayoutManager = GridLayoutManager(this.context, 2, GridLayoutManager.VERTICAL, false)
         binding.recycler.addOnScrollListener(onScrollListener())
+        initRecycler()
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,6 +83,7 @@ class NewFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         pictureAdapter.clear()
+        Log.d("tag", "I'm here")
         page = 1
         isLoading = false
         binding.customProgressBar.isVisible = false
@@ -88,7 +92,7 @@ class NewFragment : Fragment() {
     private fun initRecycler() {
         with(binding.recycler) {
             pictureAdapter = PictureAdapter(newClickListener)
-            adapter = pictureAdapter.apply { notifyDataSetChanged() }
+            adapter = pictureAdapter
             layoutManager = myLayoutManager
         }
     }
@@ -103,7 +107,6 @@ class NewFragment : Fragment() {
     private fun getImages() {
         isLoading = true
         binding.customProgressBar.isVisible = true
-
         val compositeDisposable = CompositeDisposable()
         api.let {
             api.getPicture(true, page, limit)

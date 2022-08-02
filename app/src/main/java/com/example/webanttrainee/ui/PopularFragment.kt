@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit
 
 class PopularFragment : Fragment() {
 
+    // так быть не должно, надо это отрефакторить. мне не нравится кол-во переменных
     private lateinit var binding: ContentFragmentBinding
     private lateinit var pictureAdapter: PictureAdapter
     private lateinit var myLayoutManager: LinearLayoutManager
@@ -109,7 +110,7 @@ class PopularFragment : Fragment() {
     private fun initRecycler() {
         with(binding.recycler) {
             pictureAdapter = PictureAdapter(popularClickListener)
-            adapter = pictureAdapter.apply { notifyDataSetChanged() }
+            adapter = pictureAdapter
             layoutManager = myLayoutManager
         }
     }
