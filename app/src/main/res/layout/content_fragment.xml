@@ -10,10 +10,12 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -44,5 +46,52 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/placeHolderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="visible"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivNoInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/placeholder_no_internet"
+            android:src="@drawable/ic_no_internet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNoInternetHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sf_compact_display_semibold"
+            android:text="@string/no_internet_header"
+            android:textColor="#2F1767"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/ivNoInternet"
+            app:layout_constraintStart_toStartOf="@id/ivNoInternet"
+            app:layout_constraintTop_toBottomOf="@id/ivNoInternet" />
+
+        <TextView
+            android:id="@+id/tvNoInternetDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sf_compact_display_regular"
+            android:gravity="center"
+            android:text="@string/no_internet_description"
+            android:textColor="#4A4A4A"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/tvNoInternetHeader"
+            app:layout_constraintStart_toStartOf="@id/tvNoInternetHeader"
+            app:layout_constraintTop_toBottomOf="@id/tvNoInternetHeader" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

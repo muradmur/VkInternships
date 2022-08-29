@@ -35,8 +35,8 @@ class NewFragment : Fragment() {
     private var limit = 12
     var isLoading = false
 
-//    private var pictureRepository = PictureRepository(pictureService, true, page, limit)
-    private var pictureRepository = PictureRepository(pictureService, )
+    //    private var pictureRepository = PictureRepository(pictureService, true, page, limit)
+    private var pictureRepository = PictureRepository(pictureService)
 
     // инициализируется в getImages и нужен, чтобы при прокрутке вверх не было прогресс бара
     private var totalPage = 1
@@ -149,8 +149,13 @@ class NewFragment : Fragment() {
             isLoading = it
         }
 
-        viewModel.totalPage.observe(viewLifecycleOwner){
+        viewModel.totalPage.observe(viewLifecycleOwner) {
             totalPage = it
+        }
+
+        viewModel.isError.observe(viewLifecycleOwner) {
+            binding.placeHolderContainer.isVisible = it
+            binding.recycler.isVisible = !it
         }
     }
 

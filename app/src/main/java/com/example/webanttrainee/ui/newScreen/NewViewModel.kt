@@ -31,6 +31,9 @@ class NewViewModel(
     private val _totalPage = MutableLiveData<Int>()
     var totalPage = _totalPage
 
+    private val _isError = MutableLiveData<Boolean>()
+    var isError = _isError
+
     fun getImages(isNew: Boolean, page: Int, limit: Int) {
         isLoading.value = true
         isVisible.value = true
@@ -51,6 +54,7 @@ class NewViewModel(
         isVisible.value = false
         isLoading.value = false
         isRefreshing.value = false
+        isError.value = true
     }
 
     private fun onResponse(it: PictureList) {
@@ -60,5 +64,6 @@ class NewViewModel(
         isLoading.value = false
         isVisible.value = false
         isRefreshing.value = false
+        isError.value = false
     }
 }
