@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,7 +18,7 @@ import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.model.PictureList
-import com.example.webanttrainee.remote.PictureApi
+import com.example.webanttrainee.remote.PictureService
 import com.example.webanttrainee.ui.adapters.PictureAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -36,7 +35,7 @@ class PopularFragment : Fragment() {
     private var totalPage = 1
     private var limit = 12
     private var isLoading = false
-    private val api: PictureApi
+    private val api: PictureService
         get() = (activity?.application as App).pictureApi
 
     private val popularClickListener = object : ItemClickListener<Data> {
@@ -140,7 +139,8 @@ class PopularFragment : Fragment() {
     }
 
     private fun onFailure(`throw`: Throwable?) {
-        Toast.makeText(requireContext(), `throw`?.toString(), Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_popular_fragment_to_noInternetFragment3)
+//        Toast.makeText(requireContext(), `throw`?.toString(), Toast.LENGTH_LONG).show()
         isLoading = false
         binding.customProgressBar.isVisible = false
         binding.refreshLayout.isRefreshing = false

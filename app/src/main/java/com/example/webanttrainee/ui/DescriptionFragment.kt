@@ -17,9 +17,9 @@ import com.example.webanttrainee.model.Data
 class DescriptionFragment : Fragment() {
 
     private lateinit var binding: DescriptionFragmentBinding
+    
     private val data
         get() = requireArguments().getSerializable(ARG_DATA) as Data
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

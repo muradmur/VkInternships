@@ -6,56 +6,57 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.webanttrainee.App
 import com.example.webanttrainee.App.Companion.ARG_DATA
 import com.example.webanttrainee.ItemClickListener
 import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.model.Data
-import com.example.webanttrainee.model.PictureList
-import com.example.webanttrainee.remote.PictureApi
+import com.example.webanttrainee.remote.PictureRepository
+import com.example.webanttrainee.remote.PictureService
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 class NewFragment : Fragment() {
+
+    private lateinit var viewModel: NewViewModel
 
     private lateinit var binding: ContentFragmentBinding
     private lateinit var myLayoutManager: LinearLayoutManager
     private lateinit var pictureAdapter: PictureAdapter
 
-    private val api: PictureApi
-        get() = (activity?.application as App).pictureApi
+    private val pictureService: PictureService
+        get() = PictureService.getInstance()
 
-    private val newClickListener = object : ItemClickListener<Data> {
-        override fun onClick(value: Data) {
-            findNavController().navigate(
-                R.id.action_newFragment_to_descriptionNewFragment,
-                bundleOf(ARG_DATA to value)
-            )
+    private val newClickListener: ItemClickListener<Data>
+        get() = object : ItemClickListener<Data> {
+            override fun onClick(value: Data) {
+                findNavController().navigate(
+                    R.id.action_newFragment_to_descriptionNewFragment,
+                    bundleOf(ARG_DATA to value)
+                )
+            }
         }
-    }
 
     private var page = 1
     private var limit = 12
     var isLoading = false
-    // инициализируется в getImages и нужна, чтобы при прокрутке вверх не было прогресс бара
+
+    private val pictureRepository = PictureRepository(pictureService, true, page, limit)
+
+    // инициализируется в getImages и нужен, чтобы при прокрутке вверх не было прогресс бара
     private var totalPage = 1
 
     override fun onStart() {
         super.onStart()
-        Log.d("tag", "I'm here")
-        getImages()
+
+        viewModel.getImages()
     }
 
     override fun onCreateView(
@@ -63,7 +64,11 @@ class NewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("tag", "onCreateView")
+
+        viewModel = ViewModelProvider(
+            this,
+            NewViewModelFactory(pictureRepository)
+        )[NewViewModel::class.java]
 
         binding = ContentFragmentBinding.inflate(layoutInflater, container, false)
         myLayoutManager = GridLayoutManager(this.context, 2, GridLayoutManager.VERTICAL, false)
@@ -75,6 +80,7 @@ class NewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeViewModel()
         binding.refreshLayout.setOnRefreshListener {
             onRefresh()
         }
@@ -83,9 +89,8 @@ class NewFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         pictureAdapter.clear()
-        Log.d("tag", "I'm here")
         page = 1
-        isLoading = false
+        // подумать куда выносить стейт и нужно ли
         binding.customProgressBar.isVisible = false
     }
 
@@ -100,41 +105,11 @@ class NewFragment : Fragment() {
     private fun onRefresh() {
         pictureAdapter.clear()
         page = 1
-        getImages()
+        viewModel.getImages()
         binding.refreshLayout.isRefreshing = false
     }
 
-    private fun getImages() {
-        isLoading = true
-        binding.customProgressBar.isVisible = true
-        val compositeDisposable = CompositeDisposable()
-        api.let {
-            api.getPicture(true, page, limit)
-                .subscribeOn(Schedulers.io())
-                .delay(3, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    onResponse(it)
-                }, {
-                    onFailure(it)
-                }).let(compositeDisposable::add)
-        }
-    }
-
-    private fun onResponse(response: PictureList) {
-        pictureAdapter.addItems(response.result as ArrayList<Data>)
-        totalPage = response.countOfPages
-        isLoading = false
-        binding.customProgressBar.isVisible = false
-    }
-
-    private fun onFailure(_throw: Throwable?) {
-        isLoading = false
-        binding.customProgressBar.isVisible = false
-        binding.refreshLayout.isRefreshing = false
-        Toast.makeText(requireContext(), _throw?.toString(), Toast.LENGTH_LONG).show()
-    }
-
+    //Todo Вынести в абстракцию
     private fun onScrollListener() = object : RecyclerView.OnScrollListener() {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -148,11 +123,61 @@ class NewFragment : Fragment() {
                 if (visibleItemCount != null) {
                     if ((visibleItemCount + pastVisibleItem) >= total!!) {
                         page++
-                        getImages()
+                        viewModel.getImages()
                     }
                 }
             }
+
             super.onScrolled(recyclerView, dx, dy)
         }
     }
+
+    private fun observeViewModel() {
+
+        viewModel.pictureList.observe(viewLifecycleOwner) {
+            pictureAdapter.addItems(it as ArrayList<Data>)
+        }
+
+        viewModel.isVisible.observe(viewLifecycleOwner) {
+            binding.customProgressBar.isVisible = it
+        }
+
+        viewModel.isRefreshing.observe(viewLifecycleOwner) {
+            binding.refreshLayout.isRefreshing = it
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            isLoading = it
+        }
+    }
+    //    private fun getImages() {
+//        isLoading = true
+//        binding.customProgressBar.isVisible = true
+//        val compositeDisposable = CompositeDisposable()
+//        pictureService.let {
+//            pictureService.getPicture(true, page, limit)
+//                .subscribeOn(Schedulers.io())
+//                .delay(3, TimeUnit.SECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    onResponse(it)
+//                }, {
+//                    onFailure()
+//                }).let(compositeDisposable::add)
+//        }
+//    }
+//
+//    private fun onResponse(response: PictureList) {
+//        pictureAdapter.addItems(response.result as ArrayList<Data>)
+//        totalPage = response.countOfPages
+//        isLoading = false
+//        binding.customProgressBar.isVisible = false
+//    }
+//
+//    private fun onFailure() {
+//        isLoading = false
+//        binding.customProgressBar.isVisible = false
+//        binding.refreshLayout.isRefreshing = false
+////        Toast.makeText(requireContext(), _throw?.toString(), Toast.LENGTH_LONG).show()
+//    }
 }

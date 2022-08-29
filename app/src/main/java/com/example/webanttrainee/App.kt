@@ -2,7 +2,7 @@ package com.example.webanttrainee
 
 import android.app.Application
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.webanttrainee.remote.PictureApi
+import com.example.webanttrainee.remote.PictureService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class App: Application() {
 
-    lateinit var pictureApi: PictureApi
+    lateinit var pictureApi: PictureService
 
     override fun onCreate() {
         super.onCreate()
@@ -35,7 +35,7 @@ class App: Application() {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
-        pictureApi = retrofit.create(PictureApi::class.java)
+        pictureApi = retrofit.create(PictureService::class.java)
     }
 
     companion object{
