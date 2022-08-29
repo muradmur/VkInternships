@@ -1,9 +1,8 @@
-package com.example.webanttrainee.ui
+package com.example.webanttrainee.ui.newScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.webanttrainee.remote.PictureRepository
-import com.example.webanttrainee.remote.PictureService
 
 class NewViewModelFactory(
     private val pictureRepository: PictureRepository,

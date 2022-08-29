@@ -1,8 +1,7 @@
-package com.example.webanttrainee.ui
+package com.example.webanttrainee.ui.newScreen
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,29 +25,18 @@ import com.example.webanttrainee.ui.adapters.PictureAdapter
 class NewFragment : Fragment() {
 
     private lateinit var viewModel: NewViewModel
-
     private lateinit var binding: ContentFragmentBinding
     private lateinit var myLayoutManager: LinearLayoutManager
     private lateinit var pictureAdapter: PictureAdapter
-
     private val pictureService: PictureService
         get() = PictureService.getInstance()
-
-    private val newClickListener: ItemClickListener<Data>
-        get() = object : ItemClickListener<Data> {
-            override fun onClick(value: Data) {
-                findNavController().navigate(
-                    R.id.action_newFragment_to_descriptionNewFragment,
-                    bundleOf(ARG_DATA to value)
-                )
-            }
-        }
 
     private var page = 1
     private var limit = 12
     var isLoading = false
 
-    private val pictureRepository = PictureRepository(pictureService, true, page, limit)
+//    private var pictureRepository = PictureRepository(pictureService, true, page, limit)
+    private var pictureRepository = PictureRepository(pictureService, )
 
     // инициализируется в getImages и нужен, чтобы при прокрутке вверх не было прогресс бара
     private var totalPage = 1
@@ -56,7 +44,7 @@ class NewFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.getImages()
+        viewModel.getImages(true, page, limit)
     }
 
     override fun onCreateView(
@@ -105,13 +93,14 @@ class NewFragment : Fragment() {
     private fun onRefresh() {
         pictureAdapter.clear()
         page = 1
-        viewModel.getImages()
+
+        viewModel.getImages(true, page, limit)
+
         binding.refreshLayout.isRefreshing = false
     }
 
-    //Todo Вынести в абстракцию
+    //Todo Вынести в абстракцию, поправить пролистывание списка
     private fun onScrollListener() = object : RecyclerView.OnScrollListener() {
-
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
@@ -123,7 +112,7 @@ class NewFragment : Fragment() {
                 if (visibleItemCount != null) {
                     if ((visibleItemCount + pastVisibleItem) >= total!!) {
                         page++
-                        viewModel.getImages()
+                        viewModel.getImages(true, page, limit)
                     }
                 }
             }
@@ -131,6 +120,16 @@ class NewFragment : Fragment() {
             super.onScrolled(recyclerView, dx, dy)
         }
     }
+
+    private val newClickListener: ItemClickListener<Data>
+        get() = object : ItemClickListener<Data> {
+            override fun onClick(value: Data) {
+                findNavController().navigate(
+                    R.id.action_newFragment_to_descriptionNewFragment,
+                    bundleOf(ARG_DATA to value)
+                )
+            }
+        }
 
     private fun observeViewModel() {
 
@@ -149,7 +148,12 @@ class NewFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) {
             isLoading = it
         }
+
+        viewModel.totalPage.observe(viewLifecycleOwner){
+            totalPage = it
+        }
     }
+
     //    private fun getImages() {
 //        isLoading = true
 //        binding.customProgressBar.isVisible = true
@@ -180,4 +184,5 @@ class NewFragment : Fragment() {
 //        binding.refreshLayout.isRefreshing = false
 ////        Toast.makeText(requireContext(), _throw?.toString(), Toast.LENGTH_LONG).show()
 //    }
+
 }

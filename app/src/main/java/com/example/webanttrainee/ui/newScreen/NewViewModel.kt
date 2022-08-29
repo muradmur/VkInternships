@@ -1,12 +1,10 @@
-package com.example.webanttrainee.ui
+package com.example.webanttrainee.ui.newScreen
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.model.PictureList
 import com.example.webanttrainee.remote.PictureRepository
-import com.example.webanttrainee.remote.PictureService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -30,14 +28,14 @@ class NewViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     var isLoading = _isLoading
 
-    private var totalPages: Int = 0
+    private val _totalPage = MutableLiveData<Int>()
+    var totalPage = _totalPage
 
-    fun getImages() {
+    fun getImages(isNew: Boolean, page: Int, limit: Int) {
         isLoading.value = true
         isVisible.value = true
         val compositeDisposable = CompositeDisposable()
-       pictureRepository.getPicture().let {
-           pictureRepository.getPicture()
+            pictureRepository.getPicture(isNew, page, limit)
                 .subscribeOn(Schedulers.io())
                 .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,7 +44,6 @@ class NewViewModel(
                 }, {
                     onFailure()
                 }).let(compositeDisposable::add)
-        }
     }
 
     private fun onFailure() {
@@ -59,7 +56,7 @@ class NewViewModel(
     private fun onResponse(it: PictureList) {
 
         pictureList.value = it.result
-        totalPages = it.countOfPages
+        totalPage.value = it.countOfPages
         isLoading.value = false
         isVisible.value = false
         isRefreshing.value = false
