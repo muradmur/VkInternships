@@ -57,7 +57,6 @@ class NewFragment : Fragment() {
         }
     }
 
-
     private fun observeViewModel() {
         viewModel.pictureList.observe(viewLifecycleOwner) {
             pictureAdapter.submitList(it)

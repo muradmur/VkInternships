@@ -24,7 +24,7 @@ class PopularFragment : Fragment() {
     private val pictureRepository by lazy { PictureRepository(pictureService) }
     private val pictureAdapter by lazy {
         PictureAdapter {
-            findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment())
+            findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
         }
     }
     private val viewModel: NewViewModel by lazy {

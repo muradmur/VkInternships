@@ -19,5 +19,8 @@
         android:id="@+id/descriptionItemPopularFragment"
         android:name="com.example.webanttrainee.ui.screens.DescriptionFragment"
         android:label=""
-        tools:layout="@layout/description_fragment" />
+        tools:layout="@layout/description_fragment" >
+        <argument android:name="response"
+            app:argType="com.example.webanttrainee.model.Data" />
+    </fragment>
 </navigation>
