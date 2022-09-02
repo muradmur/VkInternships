@@ -19,5 +19,9 @@
         android:id="@+id/descriptionFragment"
         android:name="com.example.webanttrainee.ui.DescriptionFragment"
         tools:layout="@layout/description_fragment"
-        android:label=""/>
+        android:label="">
+        <argument
+            android:name="response"
+            app:argType="com.example.webanttrainee.model.Data" />
+    </fragment>
 </navigation>

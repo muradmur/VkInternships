@@ -50,7 +50,7 @@ class PopularFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initRecycler()
-        getImages()
+//        getImages()
     }
 
     override fun onCreateView(
@@ -67,7 +67,7 @@ class PopularFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recycler.addOnScrollListener(onScrollListener())
         binding.refreshLayout.setOnRefreshListener {
-            onRefresh()
+//            onRefresh()
         }
     }
 
@@ -90,7 +90,7 @@ class PopularFragment : Fragment() {
                 if (visibleItemCount != null) {
                     if ((visibleItemCount + pastVisibleItem) >= total!!) {
                         page++
-                        getImages()
+//                        getImages()
                     }
                 }
             }
@@ -98,11 +98,11 @@ class PopularFragment : Fragment() {
         }
     }
 
-    private fun onRefresh() {
-        page = 1
-        getImages()
-        binding.refreshLayout.isRefreshing = false
-    }
+//    private fun onRefresh() {
+//        page = 1
+//        getImages()
+//        binding.refreshLayout.isRefreshing = false
+//    }
 
     private fun initRecycler() {
         with(binding.recycler) {
@@ -112,22 +112,22 @@ class PopularFragment : Fragment() {
         }
     }
 
-    private fun getImages() {
-        isLoading = true
-        binding.customProgressBar.isVisible = true
-        val compositeDisposable = CompositeDisposable()
-        api.let {
-            api.getPicture(false, page, limit)
-                .subscribeOn(Schedulers.io())
-                .delay(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    onResponse(it)
-                }, {
-                    onFailure(it)
-                }).let(compositeDisposable::add)
-        }
-    }
+//    private fun getImages() {
+//        isLoading = true
+//        binding.customProgressBar.isVisible = true
+//        val compositeDisposable = CompositeDisposable()
+//        api.let {
+//            api.getPicture(false, page, limit)
+//                .subscribeOn(Schedulers.io())
+//                .delay(1, TimeUnit.SECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    onResponse(it)
+//                }, {
+//                    onFailure(it)
+//                }).let(compositeDisposable::add)
+//        }
+//    }
 
     private fun onResponse(response: PictureResponse) {
 //        pictureAdapter.addItems(response.result)
@@ -136,13 +136,13 @@ class PopularFragment : Fragment() {
         binding.customProgressBar.isVisible = false
     }
 
-    private fun onFailure(`throw`: Throwable?) {
-        findNavController().navigate(R.id.action_popular_fragment_to_noInternetFragment3)
-//        Toast.makeText(requireContext(), `throw`?.toString(), Toast.LENGTH_LONG).show()
-        isLoading = false
-        binding.customProgressBar.isVisible = false
-        binding.refreshLayout.isRefreshing = false
-    }
+//    private fun onFailure(`throw`: Throwable?) {
+//        findNavController().navigate(R.id.action_popular_fragment_to_noInternetFragment3)
+////        Toast.makeText(requireContext(), `throw`?.toString(), Toast.LENGTH_LONG).show()
+//        isLoading = false
+//        binding.customProgressBar.isVisible = false
+//        binding.refreshLayout.isRefreshing = false
+//    }
 
 
 }
