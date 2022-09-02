@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
         binding.bottomNav.setupWithNavController(navController)
         binding.customToolBar.setNavigationOnClickListener{
-            findNavController(R.id.fragmentContainerView).popBackStack()
+            navController.popBackStack()
         }
     }
 }

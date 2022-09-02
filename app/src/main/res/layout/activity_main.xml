@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_popular_menu_item"
             app:titleTextColor="@color/header"
             tools:title="New" />
     </com.google.android.material.appbar.AppBarLayout>

@@ -31,8 +31,8 @@
         <entry key="app/src/main/res/drawable/test.xml" value="0.2585" />
         <entry key="app/src/main/res/drawable/test2.xml" value="0.2585" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/content_fragment.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/description_fragment.xml" value="0.2105978260869565" />
+        <entry key="app/src/main/res/layout/content_fragment.xml" value="0.15165876777251186" />
+        <entry key="app/src/main/res/layout/description_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/new_description_fragment.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/picture_description.xml" value="0.33" />
         <entry key="app/src/main/res/layout/picture_description_fragment.xml" value="0.34479166666666666" />

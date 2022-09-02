@@ -1,7 +1,9 @@
 package com.example.webanttrainee.remote
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.webanttrainee.App
-import com.example.webanttrainee.model.PictureList
+import com.example.webanttrainee.model.PictureResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,7 +19,7 @@ interface PictureService {
         @Query("new") isNew: Boolean,
         @Query("page") page: Int,
         @Query("limit") limit: Int,
-    ): Single<PictureList>
+    ): Single<PictureResponse>
 
     companion object {
 
@@ -26,7 +28,7 @@ interface PictureService {
 
         var pictureApi: PictureService? = null
 
-        fun getInstance(): PictureService {
+        fun getInstance(context: Context): PictureService {
 
             val httpLoginInterceptor = HttpLoggingInterceptor().also {
                 HttpLoggingInterceptor.Level.BODY
@@ -35,7 +37,7 @@ interface PictureService {
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(httpLoginInterceptor)
                 // нужен, чтобы при запуске приложения открывалась утилита с отображением запросов
-//                    .addInterceptor(ChuckerInterceptor.Builder(CONTEXT).build())
+                .addInterceptor(ChuckerInterceptor.Builder(context).build())
                 .build()
 
             return if (pictureApi == null) {

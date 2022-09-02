@@ -24,7 +24,6 @@ class App: Application() {
 
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(httpLoginInterceptor)
-            // нужен, чтобы при запуске приложения открывалась утилита с отображением запросов
             .addInterceptor(ChuckerInterceptor.Builder(applicationContext).build())
             .build()
 

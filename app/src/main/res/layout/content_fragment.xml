@@ -3,34 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.newScreen.NewFragment">
+    android:layout_height="match_parent">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:itemCount="8"
             tools:listitem="@layout/picture_item" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
@@ -51,8 +41,8 @@
         android:id="@+id/placeHolderContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:visibility="visible"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/ivNoInternet"

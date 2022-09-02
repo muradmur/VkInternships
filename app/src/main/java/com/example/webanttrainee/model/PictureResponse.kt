@@ -2,10 +2,10 @@ package com.example.webanttrainee.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PictureList(
+data class PictureResponse(
     val countOfPages: Int,
     @SerializedName("data")
-    val result: List<Data>,
+    val images: List<Data>,
     val itemsPerPage: Int,
     val totalItems: Int
 )

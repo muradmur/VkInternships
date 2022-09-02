@@ -17,7 +17,7 @@ import com.example.webanttrainee.ItemClickListener
 import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.model.Data
-import com.example.webanttrainee.model.PictureList
+import com.example.webanttrainee.model.PictureResponse
 import com.example.webanttrainee.remote.PictureService
 import com.example.webanttrainee.ui.adapters.PictureAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -73,7 +73,6 @@ class PopularFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        pictureAdapter.clear()
         page = 1
         isLoading = false
         binding.customProgressBar.isVisible = false
@@ -100,7 +99,6 @@ class PopularFragment : Fragment() {
     }
 
     private fun onRefresh() {
-        pictureAdapter.clear()
         page = 1
         getImages()
         binding.refreshLayout.isRefreshing = false
@@ -121,7 +119,7 @@ class PopularFragment : Fragment() {
         api.let {
             api.getPicture(false, page, limit)
                 .subscribeOn(Schedulers.io())
-                .delay(3, TimeUnit.SECONDS)
+                .delay(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     onResponse(it)
@@ -131,8 +129,8 @@ class PopularFragment : Fragment() {
         }
     }
 
-    private fun onResponse(response: PictureList) {
-        pictureAdapter.addItems(response.result as ArrayList<Data>)
+    private fun onResponse(response: PictureResponse) {
+//        pictureAdapter.addItems(response.result)
         isLoading = false
         totalPage = response.countOfPages
         binding.customProgressBar.isVisible = false

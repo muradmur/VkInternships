@@ -1,7 +1,5 @@
 package com.example.webanttrainee.model
 
-import java.io.Serializable
-
 data class Data(
     val dateCreate: String,
     val description: String,
@@ -11,4 +9,4 @@ data class Data(
     val new: Boolean,
     val popular: Boolean,
     val user: String
-): Serializable
+)
