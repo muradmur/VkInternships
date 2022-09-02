@@ -2,7 +2,6 @@ package com.example.webanttrainee.remote
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.webanttrainee.App
 import com.example.webanttrainee.model.PictureResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -23,11 +22,8 @@ interface PictureService {
 
     companion object {
 
-        const val ARG_DATA = "ARG_DATA"
         const val BASE_URL = "https://gallery.prod1.webant.ru"
-
         var pictureApi: PictureService? = null
-
         fun getInstance(context: Context): PictureService {
 
             val httpLoginInterceptor = HttpLoggingInterceptor().also {
@@ -36,13 +32,12 @@ interface PictureService {
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(httpLoginInterceptor)
-                // нужен, чтобы при запуске приложения открывалась утилита с отображением запросов
                 .addInterceptor(ChuckerInterceptor.Builder(context).build())
                 .build()
 
             return if (pictureApi == null) {
                 val retrofit = Retrofit.Builder()
-                    .baseUrl(App.BASE_URL)
+                    .baseUrl(BASE_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

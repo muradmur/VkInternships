@@ -1,17 +1,17 @@
-package com.example.webanttrainee.ui.newScreen
+package com.example.webanttrainee.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.model.Data
-import com.example.webanttrainee.model.PictureResponse
 import com.example.webanttrainee.remote.PictureRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class NewViewModel(
-    private val pictureRepository: PictureRepository
+    private val pictureRepository: PictureRepository,
+    private val isNew: Boolean
 ) : ViewModel() {
 
     private val _pictureList = MutableLiveData<List<Data>>(listOf())
@@ -31,10 +31,10 @@ class NewViewModel(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        getImages(true)
+        getImages()
     }
 
-    fun getImages(isNew: Boolean) {
+    fun getImages() {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
             pictureRepository.getPicture(isNew, currentPage, 12)
                 .subscribeOn(Schedulers.io())
@@ -65,6 +65,6 @@ class NewViewModel(
     fun refresh() {
         currentPage = 1
         _pictureList.postValue(arrayListOf())
-        getImages(true)
+        getImages()
     }
 }
