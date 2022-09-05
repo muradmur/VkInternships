@@ -14,8 +14,9 @@ import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.remote.PictureRepository
 import com.example.webanttrainee.remote.PictureService
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.NewViewModel
-import com.example.webanttrainee.ui.viewModels.NewViewModelFactory
+import com.example.webanttrainee.ui.viewModels.ViewModel
+import com.example.webanttrainee.ui.viewModels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
 class PopularFragment : Fragment() {
 
@@ -27,8 +28,8 @@ class PopularFragment : Fragment() {
             findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
         }
     }
-    private val viewModel: NewViewModel by lazy {
-        ViewModelProvider(this, NewViewModelFactory(pictureRepository, false))[NewViewModel::class.java]
+    private val viewModel: ViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory(pictureRepository, false))[ViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

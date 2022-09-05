@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.webanttrainee.databinding.DescriptionFragmentBinding
 import com.example.webanttrainee.remote.PictureService
-
+import dagger.hilt.android.AndroidEntryPoint
 
 class DescriptionFragment : Fragment() {
 

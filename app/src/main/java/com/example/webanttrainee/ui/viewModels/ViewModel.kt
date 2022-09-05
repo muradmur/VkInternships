@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.remote.PictureRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class NewViewModel(
+class ViewModel(
     private val pictureRepository: PictureRepository,
     private val isNew: Boolean
 ) : ViewModel() {

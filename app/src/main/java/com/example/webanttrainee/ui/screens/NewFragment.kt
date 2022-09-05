@@ -1,6 +1,5 @@
 package com.example.webanttrainee.ui.screens
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,9 @@ import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.remote.PictureRepository
 import com.example.webanttrainee.remote.PictureService
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.NewViewModel
-import com.example.webanttrainee.ui.viewModels.NewViewModelFactory
+import com.example.webanttrainee.ui.viewModels.ViewModel
+import com.example.webanttrainee.ui.viewModels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
 class NewFragment : Fragment() {
 
@@ -28,8 +28,9 @@ class NewFragment : Fragment() {
             findNavController().navigate(NewFragmentDirections.actionNewFragmentToDescriptionNewFragment(it))
         }
     }
-    private val viewModel: NewViewModel by lazy {
-        ViewModelProvider(this, NewViewModelFactory(pictureRepository, true))[NewViewModel::class.java]
+
+    private val viewModel: ViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory(pictureRepository, true))[ViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =

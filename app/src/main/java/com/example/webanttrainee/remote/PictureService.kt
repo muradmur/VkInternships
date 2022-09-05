@@ -3,6 +3,9 @@ package com.example.webanttrainee.remote
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.webanttrainee.model.PictureResponse
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,6 +14,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import javax.inject.Singleton
 
 interface PictureService {
     @GET("/api/photos")
@@ -23,6 +27,7 @@ interface PictureService {
     companion object {
 
         const val BASE_URL = "https://gallery.prod1.webant.ru"
+
         var pictureApi: PictureService? = null
         fun getInstance(context: Context): PictureService {
 
