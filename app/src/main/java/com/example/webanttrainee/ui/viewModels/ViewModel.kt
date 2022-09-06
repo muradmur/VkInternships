@@ -5,13 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.remote.PictureRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class NewViewModel(
-    private val pictureRepository: PictureRepository,
-    private val isNew: Boolean
+@HiltViewModel
+class ViewModel @Inject constructor(
+    private val pictureRepository: PictureRepository
 ) : ViewModel() {
 
     private val _pictureList = MutableLiveData<List<Data>>(listOf())
@@ -31,10 +33,10 @@ class NewViewModel(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        getImages()
+        getImages(true)
     }
 
-    fun getImages() {
+    fun getImages(isNew: Boolean) {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
             pictureRepository.getPicture(isNew, currentPage, 12)
                 .subscribeOn(Schedulers.io())
@@ -62,9 +64,9 @@ class NewViewModel(
         _isRefreshing.value = false
     }
 
-    fun refresh() {
+    fun refresh(isNew: Boolean) {
         currentPage = 1
         _pictureList.postValue(arrayListOf())
-        getImages()
+        getImages(isNew)
     }
 }

@@ -6,30 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.remote.PictureRepository
-import com.example.webanttrainee.remote.PictureService
+import com.example.webanttrainee.remote.PictureApi
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.NewViewModel
-import com.example.webanttrainee.ui.viewModels.NewViewModelFactory
+import com.example.webanttrainee.ui.viewModels.ViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+//import com.example.webanttrainee.ui.viewModels.ViewModelFactory
+
+@AndroidEntryPoint
 class PopularFragment : Fragment() {
 
     private lateinit var binding: ContentFragmentBinding
-    private val pictureService by lazy { PictureService.getInstance(requireContext()) }
-    private val pictureRepository by lazy { PictureRepository(pictureService) }
     private val pictureAdapter by lazy {
         PictureAdapter {
             findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
         }
     }
-    private val viewModel: NewViewModel by lazy {
-        ViewModelProvider(this, NewViewModelFactory(pictureRepository, false))[NewViewModel::class.java]
-    }
+    private val viewModel by viewModels<ViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ContentFragmentBinding.inflate(layoutInflater).also { binding = it }.root
@@ -48,7 +48,7 @@ class PopularFragment : Fragment() {
                 ((recyclerView.layoutManager) as GridLayoutManager).findLastCompletelyVisibleItemPosition()
             val totalItemsCount = recyclerView.adapter?.itemCount ?: 0
             if (totalItemsCount - lastVisibleItem <= 20) {
-                viewModel.getImages()
+                viewModel.getImages(false)
             }
         }
     }
@@ -73,7 +73,7 @@ class PopularFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.refreshLayout.setOnRefreshListener { viewModel.refresh() }
+        binding.refreshLayout.setOnRefreshListener { viewModel.refresh(false) }
         binding.recycler.addOnScrollListener(onScrollListener())
     }
 
