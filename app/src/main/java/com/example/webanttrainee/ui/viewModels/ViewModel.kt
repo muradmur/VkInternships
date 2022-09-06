@@ -11,9 +11,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ViewModel(
-    private val pictureRepository: PictureRepository,
-    private val isNew: Boolean
+@HiltViewModel
+class ViewModel @Inject constructor(
+    private val pictureRepository: PictureRepository
 ) : ViewModel() {
 
     private val _pictureList = MutableLiveData<List<Data>>(listOf())
@@ -33,10 +33,10 @@ class ViewModel(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        getImages()
+        getImages(true)
     }
 
-    fun getImages() {
+    fun getImages(isNew: Boolean) {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
             pictureRepository.getPicture(isNew, currentPage, 12)
                 .subscribeOn(Schedulers.io())
@@ -64,9 +64,9 @@ class ViewModel(
         _isRefreshing.value = false
     }
 
-    fun refresh() {
+    fun refresh(isNew: Boolean) {
         currentPage = 1
         _pictureList.postValue(arrayListOf())
-        getImages()
+        getImages(isNew)
     }
 }

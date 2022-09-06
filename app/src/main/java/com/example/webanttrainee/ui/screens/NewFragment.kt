@@ -6,32 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.remote.PictureRepository
-import com.example.webanttrainee.remote.PictureService
+import com.example.webanttrainee.remote.PictureApi
 import com.example.webanttrainee.ui.adapters.PictureAdapter
 import com.example.webanttrainee.ui.viewModels.ViewModel
-import com.example.webanttrainee.ui.viewModels.ViewModelFactory
+//import com.example.webanttrainee.ui.viewModels.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewFragment : Fragment() {
 
     private lateinit var binding: ContentFragmentBinding
-    private val pictureService by lazy { PictureService.getInstance(requireContext()) }
-    private val pictureRepository by lazy { PictureRepository(pictureService) }
     private val pictureAdapter by lazy {
         PictureAdapter {
             findNavController().navigate(NewFragmentDirections.actionNewFragmentToDescriptionNewFragment(it))
         }
     }
 
-    private val viewModel: ViewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory(pictureRepository, true))[ViewModel::class.java]
-    }
+    private val viewModel by viewModels<ViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         ContentFragmentBinding.inflate(layoutInflater).also { binding = it }.root
@@ -53,7 +51,7 @@ class NewFragment : Fragment() {
             val lastVisibleItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
             val totalItemsCount = recyclerView.adapter?.itemCount ?: 0
             if (totalItemsCount - lastVisibleItem <= 20) {
-                viewModel.getImages()
+                viewModel.getImages(true)
             }
         }
     }
@@ -78,7 +76,7 @@ class NewFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.refreshLayout.setOnRefreshListener { viewModel.refresh() }
+        binding.refreshLayout.setOnRefreshListener { viewModel.refresh(true) }
         binding.recycler.addOnScrollListener(onScrollListener())
     }
 }
