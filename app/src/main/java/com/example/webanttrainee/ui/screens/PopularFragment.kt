@@ -36,6 +36,7 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImages(false)
         observeViewModel()
         setupListeners()
         initRecycler()

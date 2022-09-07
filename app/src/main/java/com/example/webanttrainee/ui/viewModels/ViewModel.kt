@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModel @Inject constructor(
+open class ViewModel @Inject constructor(
     private val pictureRepository: PictureRepository
 ) : ViewModel() {
 
@@ -32,9 +32,9 @@ class ViewModel @Inject constructor(
     private var totalItemCount: Int = 2
     private val compositeDisposable = CompositeDisposable()
 
-    init {
-        getImages(true)
-    }
+//    init {
+//        getImages(false)
+//    }
 
     fun getImages(isNew: Boolean) {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
