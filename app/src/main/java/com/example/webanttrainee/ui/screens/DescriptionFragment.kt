@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.webanttrainee.databinding.DescriptionFragmentBinding
-import com.example.webanttrainee.remote.PictureApi
+import com.example.webanttrainee.remote.Api
 
 class DescriptionFragment : Fragment() {
 
@@ -25,7 +25,7 @@ class DescriptionFragment : Fragment() {
         binding.tvDescription.text = args.response.description
         binding.tvHeaderDescription.text = args.response.name
         Glide.with(binding.ivPoster.context)
-            .load("${PictureApi.BASE_URL}/media/${args.response.image.name}")
+            .load("${Api.BASE_URL}/media/${args.response.image.name}")
             .into(binding.ivPoster)
         return binding.root
     }

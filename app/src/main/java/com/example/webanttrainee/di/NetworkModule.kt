@@ -2,7 +2,7 @@ package com.example.webanttrainee.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.webanttrainee.remote.PictureApi
+import com.example.webanttrainee.remote.Api
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,15 +21,15 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiInterface(@ApplicationContext context: Context): PictureApi {
-        return getRetrofit(getOkHttpClient(context)).create(PictureApi::class.java)
+    fun provideApiInterface(@ApplicationContext context: Context): Api {
+        return getRetrofit(getOkHttpClient(context)).create(Api::class.java)
     }
 
     @Singleton
     @Provides
     fun getRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(PictureApi.BASE_URL)
+            .baseUrl(Api.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

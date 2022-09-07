@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 
 class PictureRepository @Inject constructor(
-    private val pictureApi: PictureApi,
+    private val api: Api,
 ) {
-    fun getPicture(isNew: Boolean, page: Int, limit: Int) = pictureApi.getPicture(isNew, page, limit)
+    fun getPicture(isNew: Boolean, page: Int, limit: Int) = api.getPicture(isNew, page, limit)
 }

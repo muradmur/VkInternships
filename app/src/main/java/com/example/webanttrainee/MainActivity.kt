@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
             navController,
             AppBarConfiguration(setOf(R.id.newFragment, R.id.popularFragment))
         )
-
-
         binding.customToolBar.setNavigationOnClickListener {
             navController.popBackStack()
         }
