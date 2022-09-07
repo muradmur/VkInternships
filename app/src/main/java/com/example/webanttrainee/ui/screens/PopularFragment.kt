@@ -7,18 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.databinding.ContentFragmentBinding
-import com.example.webanttrainee.remote.PictureRepository
-import com.example.webanttrainee.remote.PictureApi
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.ViewModel
+import com.example.webanttrainee.ui.viewModels.PopularViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-//import com.example.webanttrainee.ui.viewModels.ViewModelFactory
 
 @AndroidEntryPoint
 class PopularFragment : Fragment() {
@@ -29,7 +25,7 @@ class PopularFragment : Fragment() {
             findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
         }
     }
-    private val viewModel by viewModels<ViewModel>()
+    private val viewModel by viewModels<PopularViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ContentFragmentBinding.inflate(layoutInflater).also { binding = it }.root

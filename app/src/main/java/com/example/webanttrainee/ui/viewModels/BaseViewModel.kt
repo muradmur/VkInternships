@@ -5,16 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.model.Data
 import com.example.webanttrainee.remote.PictureRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-@HiltViewModel
-open class ViewModel @Inject constructor(
-    private val pictureRepository: PictureRepository
-) : ViewModel() {
+abstract class BaseViewModel(private val pictureRepository: PictureRepository) : ViewModel() {
 
     private val _pictureList = MutableLiveData<List<Data>>(listOf())
     var pictureList: LiveData<List<Data>> = _pictureList
@@ -31,10 +26,6 @@ open class ViewModel @Inject constructor(
     private var currentPage = 1
     private var totalItemCount: Int = 2
     private val compositeDisposable = CompositeDisposable()
-
-//    init {
-//        getImages(false)
-//    }
 
     fun getImages(isNew: Boolean) {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {

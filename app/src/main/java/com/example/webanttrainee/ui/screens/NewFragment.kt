@@ -7,16 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.webanttrainee.databinding.ContentFragmentBinding
-import com.example.webanttrainee.remote.PictureRepository
-import com.example.webanttrainee.remote.PictureApi
 import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.ViewModel
-//import com.example.webanttrainee.ui.viewModels.ViewModelFactory
+import com.example.webanttrainee.ui.viewModels.NewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,14 +25,13 @@ class NewFragment : Fragment() {
         }
     }
 
-    private val viewModel by viewModels<ViewModel>()
+    private val viewModel by viewModels<NewViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         ContentFragmentBinding.inflate(layoutInflater).also { binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getImages(true)
         observeViewModel()
         setupListeners()
         initRecycler()
