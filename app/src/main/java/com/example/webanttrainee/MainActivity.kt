@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -25,7 +26,12 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.customToolBar)
         val navController = findNavController(R.id.fragmentContainerView)
         binding.bottomNav.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
+        setupActionBarWithNavController(
+            navController,
+            AppBarConfiguration(setOf(R.id.newFragment, R.id.popularFragment))
+        )
+
+
         binding.customToolBar.setNavigationOnClickListener {
             navController.popBackStack()
         }
