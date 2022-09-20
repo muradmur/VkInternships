@@ -3,9 +3,9 @@ package com.example.webanttrainee.presentation.ui.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.webanttrainee.domain.usecases.GetPictureUseCase
-import com.example.webanttrainee.domain.model.Data
-import com.example.webanttrainee.data.remote.Api
+import com.example.domain.usecases.GetPictureUseCase
+import com.example.domain.model.Data
+import com.example.data.remote.Api
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

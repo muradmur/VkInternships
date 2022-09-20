@@ -1,6 +1,6 @@
-package com.example.webanttrainee.data.remote
+package com.example.data.remote
 
-import com.example.webanttrainee.domain.model.ImageResponse
+import com.example.domain.model.ImageResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

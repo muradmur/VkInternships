@@ -1,4 +1,4 @@
-package com.example.webanttrainee.data.remote
+package com.example.data.remote
 
 import com.example.webanttrainee.domain.repository.ResponseRepository
 import javax.inject.Inject

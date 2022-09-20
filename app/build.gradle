@@ -86,4 +86,7 @@ dependencies {
     // DI
     implementation "com.google.dagger:hilt-android:2.43"
     kapt "com.google.dagger:hilt-compiler:2.43"
+
+    implementation project(path: ':data')
+    implementation project(path: ':domain')
 }

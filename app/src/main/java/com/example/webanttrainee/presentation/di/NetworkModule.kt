@@ -2,7 +2,7 @@ package com.example.webanttrainee.presentation.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.webanttrainee.data.remote.Api
+import com.example.data.remote.Api
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

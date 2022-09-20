@@ -1,4 +1,4 @@
-package com.example.webanttrainee.utils
+package com.example.webanttrainee.presentation.utils
 
 fun interface ItemClickListener<T> {
     fun onClick(value: T)

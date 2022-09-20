@@ -1,6 +1,6 @@
-package com.example.webanttrainee.domain.repository
+package com.example.domain.repository
 
-import com.example.webanttrainee.domain.model.ImageResponse
+import com.example.domain.model.ImageResponse
 import io.reactivex.Single
 
 interface ResponseRepository {

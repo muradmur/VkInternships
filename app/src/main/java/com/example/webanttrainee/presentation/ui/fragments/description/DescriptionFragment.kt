@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.webanttrainee.databinding.DescriptionFragmentBinding
-import com.example.webanttrainee.data.remote.Api
+import com.example.data.remote.Api
 
 class DescriptionFragment : Fragment() {
 
