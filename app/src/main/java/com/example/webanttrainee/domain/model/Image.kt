@@ -1,4 +1,4 @@
-package com.example.webanttrainee.model
+package com.example.webanttrainee.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

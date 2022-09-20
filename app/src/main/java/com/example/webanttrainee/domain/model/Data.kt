@@ -1,6 +1,7 @@
-package com.example.webanttrainee.model
+package com.example.webanttrainee.domain.model
 
 import android.os.Parcelable
+import com.example.webanttrainee.domain.model.Image
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,4 +14,4 @@ data class Data(
     val new: Boolean,
     val popular: Boolean,
     val user: String
-): Parcelable
+) : Parcelable

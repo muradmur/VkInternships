@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.webanttrainee.utils.ItemClickListener
 import com.example.webanttrainee.databinding.PictureItemBinding
-import com.example.webanttrainee.model.Data
+import com.example.webanttrainee.domain.model.Data
 import com.example.webanttrainee.presentation.ui.viewholders.PictureDiffUtilCallback
 import com.example.webanttrainee.presentation.ui.viewholders.PictureViewHolder
 

@@ -1,11 +1,10 @@
 package com.example.webanttrainee.presentation.ui.base
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.domain.usecases.GetPictureUseCase
-import com.example.webanttrainee.model.Data
+import com.example.webanttrainee.domain.model.Data
 import com.example.webanttrainee.data.remote.Api
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

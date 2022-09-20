@@ -22,10 +22,10 @@ class DescriptionFragment : Fragment() {
     ): View {
 
         binding = DescriptionFragmentBinding.inflate(layoutInflater, container, false)
-        binding.tvDescription.text = args.response.description
-        binding.tvHeaderDescription.text = args.response.name
+        binding.tvDescription.text = args.data.description
+        binding.tvHeaderDescription.text = args.data.name
         Glide.with(binding.ivPoster.context)
-            .load("${Api.BASE_URL}/media/${args.response.image.name}")
+            .load("${Api.BASE_URL}/media/${args.data.image.name}")
             .into(binding.ivPoster)
         return binding.root
     }

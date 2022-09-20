@@ -20,7 +20,8 @@
         android:name="com.example.webanttrainee.presentation.ui.fragments.description.DescriptionFragment"
         android:label=""
         tools:layout="@layout/description_fragment" >
-        <argument android:name="response"
-            app:argType="com.example.webanttrainee.model.Data" />
+        <argument
+            android:name="data"
+            app:argType="com.example.webanttrainee.domain.model.Data" />
     </fragment>
 </navigation>

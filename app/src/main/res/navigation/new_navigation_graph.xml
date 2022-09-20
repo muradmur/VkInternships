@@ -21,7 +21,7 @@
         tools:layout="@layout/description_fragment"
         android:label="">
         <argument
-            android:name="response"
-            app:argType="com.example.webanttrainee.model.Data" />
+            android:name="data"
+            app:argType="com.example.webanttrainee.domain.model.Data" />
     </fragment>
 </navigation>

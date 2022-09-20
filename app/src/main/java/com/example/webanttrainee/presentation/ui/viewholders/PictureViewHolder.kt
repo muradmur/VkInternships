@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.webanttrainee.utils.ItemClickListener
 import com.example.webanttrainee.databinding.PictureItemBinding
-import com.example.webanttrainee.model.Data
+import com.example.webanttrainee.domain.model.Data
 import com.example.webanttrainee.data.remote.Api
 
 class PictureViewHolder(private val binding: PictureItemBinding, private val callback: ItemClickListener<Data>) :

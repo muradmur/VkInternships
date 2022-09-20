@@ -1,11 +1,11 @@
-package com.example.webanttrainee.model
+package com.example.webanttrainee.domain.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PictureResponse(
+data class ImageResponse(
     val countOfPages: Int,
     @SerializedName("data")
     val images: List<Data>,
