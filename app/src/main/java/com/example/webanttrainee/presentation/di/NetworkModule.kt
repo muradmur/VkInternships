@@ -1,8 +1,8 @@
-package com.example.webanttrainee.di
+package com.example.webanttrainee.presentation.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.webanttrainee.remote.Api
+import com.example.webanttrainee.data.remote.Api
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +46,6 @@ object NetworkModule {
             .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
             .build()
     }
+
+
 }

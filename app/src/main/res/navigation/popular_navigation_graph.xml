@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/popularFragment"
-        android:name="com.example.webanttrainee.ui.screens.PopularFragment"
+        android:name="com.example.webanttrainee.presentation.ui.fragments.popular.PopularFragment"
         android:label="Popular"
         tools:layout="@layout/content_fragment">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/descriptionItemPopularFragment"
-        android:name="com.example.webanttrainee.ui.screens.DescriptionFragment"
+        android:name="com.example.webanttrainee.presentation.ui.fragments.description.DescriptionFragment"
         android:label=""
         tools:layout="@layout/description_fragment" >
         <argument android:name="response"

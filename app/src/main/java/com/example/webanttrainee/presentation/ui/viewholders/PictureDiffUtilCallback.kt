@@ -1,4 +1,4 @@
-package com.example.webanttrainee.ui.viewholders
+package com.example.webanttrainee.presentation.ui.viewholders
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.webanttrainee.model.Data

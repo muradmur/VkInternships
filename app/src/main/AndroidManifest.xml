@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WebAntTrainee">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.webanttrainee.presentation.ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

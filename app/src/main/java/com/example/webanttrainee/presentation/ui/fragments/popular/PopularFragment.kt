@@ -1,4 +1,4 @@
-package com.example.webanttrainee.ui.screens
+package com.example.webanttrainee.presentation.ui.fragments.popular
 
 import android.os.Bundle
 import android.view.View
@@ -6,34 +6,31 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.webanttrainee.databinding.ContentFragmentBinding
-import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.NewViewModel
+import com.example.webanttrainee.presentation.ui.adapters.PictureAdapter
+import com.example.webanttrainee.presentation.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class NewFragment : BaseFragment<ContentFragmentBinding, NewViewModel>(
+class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
     ContentFragmentBinding::inflate
 ) {
 
-    private val viewModel1 by viewModels<NewViewModel>()
-    override fun getViewModelClass(): NewViewModel = viewModel1
-
-    // Todo: вынесение навигации во вью модель
     private val pictureAdapter by lazy {
         PictureAdapter {
-            findNavController().navigate(NewFragmentDirections.actionNewFragmentToDescriptionNewFragment(it))
+            findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
         }
     }
 
+    private val vm by viewModels<PopularViewModel>()
+    override fun getViewModelClass(): PopularViewModel = vm
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getImages(false)
         observeViewModel()
         setupListeners()
         initRecycler()
-    }
-
-    private fun initRecycler() = with(binding) {
-        recycler.adapter = pictureAdapter
     }
 
     private fun observeViewModel() {
@@ -56,8 +53,14 @@ class NewFragment : BaseFragment<ContentFragmentBinding, NewViewModel>(
     }
 
     private fun setupListeners() {
+        // Todo: при рефреше тут какая-то проблема
         binding.refreshLayout.setOnRefreshListener { viewModel.refresh(true) }
         binding.recycler.addOnScrollListener(onScrollListener())
     }
 
+    private fun initRecycler() {
+        with(binding.recycler) {
+            adapter = pictureAdapter
+        }
+    }
 }

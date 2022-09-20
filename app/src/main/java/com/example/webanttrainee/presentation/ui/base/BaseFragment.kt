@@ -1,4 +1,4 @@
-package com.example.webanttrainee.ui.screens
+package com.example.webanttrainee.presentation.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.example.webanttrainee.ui.viewModels.BaseViewModel
 
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
     private val viewBindingInflater: (inflater: LayoutInflater) -> VB,
@@ -33,7 +32,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
             val lastVisibleItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
             val totalItemsCount = recyclerView.adapter?.itemCount ?: 0
             if (totalItemsCount - lastVisibleItem <= 20) {
-                viewModel.getImages(true)
+                // Todo: вот здесь у меня и ошибка при скроле данные не те добавляются
+                // из-за того, что я передаю определенный флаг постоянно
+                viewModel.getImages(false)
             }
         }
     }

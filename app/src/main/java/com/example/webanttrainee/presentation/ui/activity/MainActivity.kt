@@ -1,4 +1,4 @@
-package com.example.webanttrainee
+package com.example.webanttrainee.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

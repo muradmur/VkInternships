@@ -1,15 +1,17 @@
-package com.example.webanttrainee.ui.viewModels
+package com.example.webanttrainee.presentation.ui.base
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.webanttrainee.domain.usecases.GetPictureUseCase
 import com.example.webanttrainee.model.Data
+import com.example.webanttrainee.data.remote.Api
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class BaseViewModel(private val getPictureUseCase: GetPictureUseCase/*private val pictureRepository: PictureRepository*/) : ViewModel() {
+abstract class BaseViewModel(private val getPictureUseCase: GetPictureUseCase) : ViewModel() {
 
     private val _pictureList = MutableLiveData<List<Data>>(listOf())
     var pictureList: LiveData<List<Data>> = _pictureList
@@ -30,8 +32,7 @@ abstract class BaseViewModel(private val getPictureUseCase: GetPictureUseCase/*p
     fun getImages(isNew: Boolean) {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
             // Todo: мы не должны на прямую обращаться к репозиторию, а исключительно через юзкейс
-            //pictureRepository.getPicture(isNew, currentPage, 12)
-            getPictureUseCase.execute(isNew, currentPage, 12)
+            getPictureUseCase.execute(isNew, currentPage, Api.LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _isLoading.value = true }

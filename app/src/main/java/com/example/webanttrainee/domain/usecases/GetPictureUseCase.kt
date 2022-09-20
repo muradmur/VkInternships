@@ -1,7 +1,8 @@
 package com.example.webanttrainee.domain.usecases
 
+import com.example.webanttrainee.data.remote.ResponseRepositoryImpl
 import com.example.webanttrainee.model.PictureResponse
-import com.example.webanttrainee.remote.ResponseRepository
+import com.example.webanttrainee.domain.repository.ResponseRepository
 import io.reactivex.Single
 import javax.inject.Inject
 

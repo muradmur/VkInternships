@@ -1,4 +1,4 @@
-package com.example.webanttrainee.ui.screens
+package com.example.webanttrainee.presentation.ui.fragments.description
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.webanttrainee.databinding.DescriptionFragmentBinding
-import com.example.webanttrainee.remote.Api
+import com.example.webanttrainee.data.remote.Api
 
 class DescriptionFragment : Fragment() {
 

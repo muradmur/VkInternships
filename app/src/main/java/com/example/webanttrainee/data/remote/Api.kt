@@ -1,4 +1,4 @@
-package com.example.webanttrainee.remote
+package com.example.webanttrainee.data.remote
 
 import com.example.webanttrainee.model.PictureResponse
 import io.reactivex.Single
@@ -15,5 +15,6 @@ interface Api {
 
     companion object {
         const val BASE_URL = "https://gallery.prod1.webant.ru"
+        const val LIMIT = 24
     }
 }

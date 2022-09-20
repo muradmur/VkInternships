@@ -1,13 +1,13 @@
-package com.example.webanttrainee.ui.adapters
+package com.example.webanttrainee.presentation.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.webanttrainee.ItemClickListener
+import com.example.webanttrainee.utils.ItemClickListener
 import com.example.webanttrainee.databinding.PictureItemBinding
 import com.example.webanttrainee.model.Data
-import com.example.webanttrainee.ui.viewholders.PictureDiffUtilCallback
-import com.example.webanttrainee.ui.viewholders.PictureViewHolder
+import com.example.webanttrainee.presentation.ui.viewholders.PictureDiffUtilCallback
+import com.example.webanttrainee.presentation.ui.viewholders.PictureViewHolder
 
 class PictureAdapter(private val callback: ItemClickListener<Data>) :
     ListAdapter<Data, PictureViewHolder>(PictureDiffUtilCallback()) {

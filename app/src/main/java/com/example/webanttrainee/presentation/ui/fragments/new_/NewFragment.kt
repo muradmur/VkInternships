@@ -1,4 +1,4 @@
-package com.example.webanttrainee.ui.screens
+package com.example.webanttrainee.presentation.ui.fragments.new_
 
 import android.os.Bundle
 import android.view.View
@@ -6,28 +6,27 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.webanttrainee.databinding.ContentFragmentBinding
-import com.example.webanttrainee.ui.adapters.PictureAdapter
-import com.example.webanttrainee.ui.viewModels.PopularViewModel
+import com.example.webanttrainee.presentation.ui.adapters.PictureAdapter
+import com.example.webanttrainee.presentation.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
+class NewFragment : BaseFragment<ContentFragmentBinding, NewViewModel>(
     ContentFragmentBinding::inflate
 ) {
 
+    private val viewModel1 by viewModels<NewViewModel>()
+    override fun getViewModelClass(): NewViewModel = viewModel1
+
+    // Todo: вынесение навигации во вью модель
     private val pictureAdapter by lazy {
         PictureAdapter {
-            findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
+            findNavController().navigate(NewFragmentDirections.actionNewFragmentToDescriptionNewFragment(it))
         }
     }
 
-    private val viewModel1 by viewModels<PopularViewModel>()
-    override fun getViewModelClass(): PopularViewModel = viewModel1
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getImages(false)
         observeViewModel()
         setupListeners()
         initRecycler()
@@ -53,13 +52,12 @@ class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
     }
 
     private fun setupListeners() {
-        binding.refreshLayout.setOnRefreshListener { viewModel.refresh(false) }
+        // Todo: при рефреше тут какая-то проблема
+        binding.refreshLayout.setOnRefreshListener { viewModel.refresh(true) }
         binding.recycler.addOnScrollListener(onScrollListener())
     }
 
-    private fun initRecycler() {
-        with(binding.recycler) {
-            adapter = pictureAdapter
-        }
+    private fun initRecycler() = with(binding) {
+        recycler.adapter = pictureAdapter
     }
 }
