@@ -1,15 +1,15 @@
 package com.example.webanttrainee.ui.viewModels
 
-import com.example.webanttrainee.remote.PictureRepository
+import com.example.webanttrainee.domain.usecases.GetPictureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PopularViewModel @Inject constructor(
-    pictureRepository: PictureRepository
-) : BaseViewModel(pictureRepository) {
+    getPictureUseCase: GetPictureUseCase
+) : BaseViewModel(getPictureUseCase) {
 
-    init {
+     init {
         getImages(false)
     }
 }

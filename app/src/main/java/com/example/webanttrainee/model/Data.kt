@@ -1,6 +1,7 @@
 package com.example.webanttrainee.model
 
 import android.os.Parcelable
+import com.example.webanttrainee.model.Image
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
