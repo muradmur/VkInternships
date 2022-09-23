@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.domain.model.Data
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.presentation.ui.adapters.PictureAdapter
 import com.example.webanttrainee.presentation.ui.base.BaseFragment
@@ -19,7 +18,6 @@ class NewFragment : BaseFragment<ContentFragmentBinding, NewViewModel>(
     private val vm by viewModels<NewViewModel>()
     override fun getViewModelClass(): NewViewModel = vm
 
-    // Todo: вынесение навигации во вьюмодель
     private val pictureAdapter by lazy {
         PictureAdapter {
             findNavController().navigate(NewFragmentDirections.actionNewFragmentToDescriptionNewFragment(it))

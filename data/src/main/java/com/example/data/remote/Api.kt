@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface Api {
+
     @GET("/api/photos")
     fun getPicture(
         @Query("new") isNew: Boolean,

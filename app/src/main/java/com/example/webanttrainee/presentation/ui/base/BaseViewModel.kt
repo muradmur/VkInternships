@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.data.model.Data
-import com.example.data.model.Image
 import com.example.data.remote.Api
 import com.example.domain.usecases.GetPictureUseCase
+import com.example.webanttrainee.presentation.ui.mapper.mapDataToUi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -40,31 +40,12 @@ abstract class BaseViewModel(
                 .doOnSubscribe { _isLoading.value = true }
                 .doFinally { _isLoading.value = false }
                 .subscribe({
-                    onResponse(mapperData(it.data))
+                    onResponse(mapDataToUi(it.data))
                     totalItemCount = it.totalItems
                     currentPage++
                 }, {
                     onFailure()
                 }).let(compositeDisposable::add)
-        }
-    }
-
-    // TODO: Написать нормальный маппер
-    fun mapperData(listDomain: List<com.example.domain.model.Data>): List<Data> {
-        return listDomain.map {
-            Data(
-                dateCreate = it.dateCreate,
-                description = it.description,
-                id = it.id,
-                image = Image(
-                    id = it.image.id,
-                    name = it.image.name,
-                ),
-                name = it.name,
-                new = it.new,
-                popular = it.popular,
-                user = if (it.user != null) it.user else ""
-            )
         }
     }
 

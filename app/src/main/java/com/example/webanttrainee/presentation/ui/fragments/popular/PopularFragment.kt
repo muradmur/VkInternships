@@ -30,7 +30,7 @@ class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
     override fun getViewModelClass(): PopularViewModel = vm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)initRecycler
         observeViewModel()
         setupListeners()
         initRecycler()
