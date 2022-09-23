@@ -22,6 +22,6 @@
         android:label="">
         <argument
             android:name="data"
-            app:argType="com.example.webanttrainee.domain.model.Data" />
+            app:argType="com.example.data.model.Data" />
     </fragment>
 </navigation>

@@ -18,7 +18,11 @@ class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
 
     private val pictureAdapter by lazy {
         PictureAdapter {
-            findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(it))
+            findNavController().navigate(
+                PopularFragmentDirections.actionPopularFragmentToDescriptionPopularFragment(
+                    it
+                )
+            )
         }
     }
 
@@ -27,7 +31,6 @@ class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getImages(false)
         observeViewModel()
         setupListeners()
         initRecycler()
@@ -53,8 +56,7 @@ class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
     }
 
     private fun setupListeners() {
-        // Todo: при рефреше тут какая-то проблема
-        binding.refreshLayout.setOnRefreshListener { viewModel.refresh(true) }
+        binding.refreshLayout.setOnRefreshListener { viewModel.refresh() }
         binding.recycler.addOnScrollListener(onScrollListener())
     }
 

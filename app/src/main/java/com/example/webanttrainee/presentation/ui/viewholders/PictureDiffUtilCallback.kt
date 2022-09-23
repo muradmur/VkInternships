@@ -1,7 +1,7 @@
 package com.example.webanttrainee.presentation.ui.viewholders
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.domain.model.Data
+import com.example.data.model.Data
 
 class PictureDiffUtilCallback : DiffUtil.ItemCallback<Data>() {
 

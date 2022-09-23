@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
-    private val viewBindingInflater: (inflater: LayoutInflater) -> VB,
+    private val viewBindingInflater: (inflater: LayoutInflater) -> VB
 ) : Fragment() {
 
     protected lateinit var viewModel: VM
@@ -32,9 +32,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
             val lastVisibleItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
             val totalItemsCount = recyclerView.adapter?.itemCount ?: 0
             if (totalItemsCount - lastVisibleItem <= 20) {
-                // Todo: вот здесь у меня и ошибка при скроле данные не те добавляются
-                // из-за того, что я передаю определенный флаг постоянно
-                viewModel.getImages(false)
+                viewModel.getImages()
             }
         }
     }

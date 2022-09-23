@@ -1,6 +1,6 @@
 package com.example.data.remote
 
-import com.example.domain.model.ImageResponse
+import com.example.data.model.ImageResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
