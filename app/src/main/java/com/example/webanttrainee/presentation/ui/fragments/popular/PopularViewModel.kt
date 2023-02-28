@@ -8,7 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PopularViewModel @Inject constructor(
     getPictureUseCase: GetPictureUseCase
-) : BaseViewModel(getPictureUseCase, false) {
+) : BaseViewModel(getPictureUseCase) {
 
      init {
         getImages()

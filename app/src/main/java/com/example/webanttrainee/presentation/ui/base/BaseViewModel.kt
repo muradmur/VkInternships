@@ -10,10 +10,10 @@ import com.example.webanttrainee.presentation.ui.mapper.mapDataToUi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.Collections.addAll
 
 abstract class BaseViewModel(
     private val getPictureUseCase: GetPictureUseCase,
-    private val isNew: Boolean
 ) : ViewModel() {
 
     private val _pictureList = MutableLiveData<List<Data>>(listOf())
@@ -34,14 +34,14 @@ abstract class BaseViewModel(
 
     fun getImages() {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
-            getPictureUseCase.execute(this.isNew, currentPage, Api.LIMIT)
+            getPictureUseCase.execute(Api.API_KEY, searchPhrase = "american psycho", Api.LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _isLoading.value = true }
                 .doFinally { _isLoading.value = false }
                 .subscribe({
                     onResponse(mapDataToUi(it.data))
-                    totalItemCount = it.totalItems
+                    totalItemCount = it.pagination.total_count
                     currentPage++
                 }, {
                     onFailure()

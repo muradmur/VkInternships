@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Image(
-    val id: Int,
-    val name: String
+data class Pagination(
+    val count: Int,
+    val offset: Int,
+    val total_count: Int
 ): Parcelable

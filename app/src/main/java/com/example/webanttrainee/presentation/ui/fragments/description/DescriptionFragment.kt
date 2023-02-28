@@ -15,18 +15,18 @@ class DescriptionFragment : Fragment() {
     private lateinit var binding: DescriptionFragmentBinding
     private val args: DescriptionFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        binding = DescriptionFragmentBinding.inflate(layoutInflater, container, false)
-        binding.tvDescription.text = args.data.description
-        binding.tvHeaderDescription.text = args.data.name
-        Glide.with(binding.ivPoster.context)
-            .load("${Api.BASE_URL}/media/${args.data.image.name}")
-            .into(binding.ivPoster)
-        return binding.root
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//
+//        binding = DescriptionFragmentBinding.inflate(layoutInflater, container, false)
+//        binding.tvDescription.text = args.data.description
+//        binding.tvHeaderDescription.text = args.data.name
+//        Glide.with(binding.ivPoster.context)
+//            .load("${Api.BASE_URL}/media/${args.data.image.name}")
+//            .into(binding.ivPoster)
+//        return binding.root
+//    }
 }

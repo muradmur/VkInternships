@@ -1,21 +1,21 @@
 package com.example.data.remote
 
-import com.example.data.model.ImageResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface Api {
 
-    @GET("/api/photos")
-    fun getPicture(
-        @Query("new") isNew: Boolean,
-        @Query("page") page: Int,
+    @GET("v1/gifs/search")
+    fun getGifByPhrase(
+        @Query("api_key") apiKey: String,
+        @Query("q") searchPhrase: String,
         @Query("limit") limit: Int,
-    ): Single<ImageResponse>
+    ): Single<com.example.domain.model.GifResponse>
 
     companion object {
-        const val BASE_URL = "https://gallery.prod1.webant.ru"
-        const val LIMIT = 24
+        const val API_KEY = "FNeFuPJ45g27bx3Re6jzPZDHkZgmr6r5"
+        const val BASE_URL = "https://api.giphy.com"
+        const val LIMIT = 25
     }
 }

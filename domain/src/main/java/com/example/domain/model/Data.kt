@@ -1,12 +1,15 @@
 package com.example.domain.model
 
 data class Data(
-    val dateCreate: String,
-    val description: String,
-    val id: Int,
-    val image: Image,
-    val name: String,
-    val new: Boolean,
-    val popular: Boolean,
-    val user: String?,
+    val content_url: String,
+    val id: String,
+    val import_datetime: String,
+    val rating: String,
+    val slug: String,
+    val source: String,
+    val source_post_url: String,
+    val title: String,
+    val trending_datetime: String,
+    val url: String,
+    val username: String
 )

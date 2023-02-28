@@ -1,22 +1,22 @@
 package com.example.webanttrainee.presentation.ui.mapper
 
 import com.example.data.model.Data
-import com.example.data.model.Image
+
 
 fun mapDataToUi(listDomain: List<com.example.domain.model.Data>): List<Data> {
     return listDomain.map {
         Data(
-            dateCreate = it.dateCreate,
-            description = it.description,
+            content_url = it.content_url,
             id = it.id,
-            image = Image(
-                id = it.image.id,
-                name = it.image.name,
-            ),
-            name = it.name,
-            new = it.new,
-            popular = it.popular,
-            user = if (it.user != null) it.user else ""
+            import_datetime = it.import_datetime,
+            rating = it.rating,
+            slug = it.slug,
+            source = it.source,
+            source_post_url = it.source_post_url,
+            title = it.title,
+            trending_datetime = it.trending_datetime,
+            url = it.url,
+            username = it.username
         )
     }
 }
