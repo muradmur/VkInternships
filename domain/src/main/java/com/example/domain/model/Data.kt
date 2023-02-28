@@ -11,5 +11,6 @@ data class Data(
     val title: String,
     val trending_datetime: String,
     val url: String,
-    val username: String
+    val username: String,
+    val images: Images,
 )

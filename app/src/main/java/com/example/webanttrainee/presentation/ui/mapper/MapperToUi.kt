@@ -1,6 +1,8 @@
 package com.example.webanttrainee.presentation.ui.mapper
 
 import com.example.data.model.Data
+import com.example.data.model.Images
+import com.example.data.model.Original
 
 
 fun mapDataToUi(listDomain: List<com.example.domain.model.Data>): List<Data> {
@@ -16,7 +18,12 @@ fun mapDataToUi(listDomain: List<com.example.domain.model.Data>): List<Data> {
             title = it.title,
             trending_datetime = it.trending_datetime,
             url = it.url,
-            username = it.username
+            username = it.username,
+            images = Images(
+                original = Original(
+                    url = it.images.original.url,
+                )
+            )
         )
     }
 }
