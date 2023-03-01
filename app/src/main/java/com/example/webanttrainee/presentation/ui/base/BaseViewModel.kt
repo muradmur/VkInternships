@@ -32,9 +32,12 @@ abstract class BaseViewModel(
     private var totalItemCount: Int = 2
     private val compositeDisposable = CompositeDisposable()
 
+
+    fun setSearchPhrase(searchPhrase: String = "american") = searchPhrase
+
     fun getImages() {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
-            getPictureUseCase.execute(Api.API_KEY, searchPhrase = "american psycho", Api.LIMIT)
+            getPictureUseCase.execute(Api.API_KEY, searchPhrase = setSearchPhrase(), Api.LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _isLoading.value = true }
@@ -48,6 +51,23 @@ abstract class BaseViewModel(
                 }).let(compositeDisposable::add)
         }
     }
+
+//    fun getGifsByPhrase(searchPhrase: String) {
+//        if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
+//            getPictureUseCase.execute(Api.API_KEY, searchPhrase = searchPhrase, Api.LIMIT)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe { _isLoading.value = true }
+//                .doFinally { _isLoading.value = false }
+//                .subscribe({
+//                    onResponse(mapDataToUi(it.data))
+//                    totalItemCount = it.pagination.total_count
+//                    currentPage++
+//                }, {
+//                    onFailure()
+//                }).let(compositeDisposable::add)
+//        }
+//    }
 
     private fun onFailure() {
         _isRefreshing.value = false
@@ -64,5 +84,10 @@ abstract class BaseViewModel(
         currentPage = 1
         _pictureList.postValue(arrayListOf())
         getImages()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }

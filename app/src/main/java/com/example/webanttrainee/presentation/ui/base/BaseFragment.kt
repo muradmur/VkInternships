@@ -31,7 +31,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
             super.onScrolled(recyclerView, dx, dy)
             val lastVisibleItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
             val totalItemsCount = recyclerView.adapter?.itemCount ?: 0
-            if (totalItemsCount - lastVisibleItem <= 20) {
+            if (totalItemsCount - lastVisibleItem <= 25) {
                 viewModel.getImages()
             }
         }
