@@ -1,5 +1,6 @@
 package com.example.webanttrainee.presentation.ui.base
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,11 +31,11 @@ abstract class BaseViewModel(
     private var currentPage = 1
     private var totalItemCount: Int = 2
     private val compositeDisposable = CompositeDisposable()
-    var wordSearchPhrase: String? = "american psycho"
+    var phraseSearch: String? = "american psycho"
 
     fun getImages() {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
-            wordSearchPhrase?.let {
+            phraseSearch?.let { it ->
                 getPictureUseCase.execute(Api.API_KEY, searchPhrase = it, Api.LIMIT)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +81,7 @@ abstract class BaseViewModel(
     fun refresh() {
         currentPage = 1
         _pictureList.postValue(arrayListOf())
-        wordSearchPhrase?.let { getGifsByPhrase(it) }
+        phraseSearch?.let { getGifsByPhrase(it) }
     }
 
     override fun onCleared() {

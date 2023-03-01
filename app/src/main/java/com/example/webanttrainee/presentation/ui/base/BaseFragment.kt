@@ -27,12 +27,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
 
     fun OnQueryTextListener() = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
+            viewModel.phraseSearch = query ?: ""
+            viewModel.refresh()
             return false
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-            viewModel.wordSearchPhrase = newText ?: ""
-            viewModel.refresh()
             return false
         }
     }

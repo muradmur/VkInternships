@@ -14,11 +14,6 @@ import com.example.webanttrainee.databinding.DescriptionFragmentBinding
 
 class DescriptionFragment : Fragment() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        setupMenu()
-    }
-
     private lateinit var binding: DescriptionFragmentBinding
     private val args: DescriptionFragmentArgs by navArgs()
 
@@ -38,23 +33,4 @@ class DescriptionFragment : Fragment() {
             .into(binding.ivPoster)
         return binding.root
     }
-
-//    private fun setupMenu() {
-//        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-//            override fun onPrepareMenu(menu: Menu) {
-//                // Handle for example visibility of menu items
-//            }
-//
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                menuInflater.inflate(R.menu.toolbar_menu, menu)
-////                val item = menu.findItem(R.menu.toolbar_menu)
-////                item.isVisible = false
-//            }
-//
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                // Validate and handle the selected menu item
-//                return false
-//            }
-//        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-//    }
 }
