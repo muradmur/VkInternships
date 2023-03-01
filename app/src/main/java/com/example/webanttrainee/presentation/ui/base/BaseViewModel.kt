@@ -1,6 +1,5 @@
 package com.example.webanttrainee.presentation.ui.base
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,7 +35,7 @@ abstract class BaseViewModel(
     fun getImages() {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
             phraseSearch?.let { it ->
-                getPictureUseCase.execute(Api.API_KEY, searchPhrase = it, Api.LIMIT)
+                getPictureUseCase.execute(Api.API_KEY, searchPhrase = it, Api.LIMIT, currentPage)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { _isLoading.value = true }
@@ -53,18 +52,20 @@ abstract class BaseViewModel(
     }
 
     private fun getGifsByPhrase(searchPhrase: String) {
-        getPictureUseCase.execute(Api.API_KEY, searchPhrase = searchPhrase, Api.LIMIT)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { _isLoading.value = true }
-            .doFinally { _isLoading.value = false }
-            .subscribe({
-                onResponse(mapDataToUi(it.data))
-                totalItemCount = it.pagination.total_count
-                currentPage++
-            }, {
-                onFailure()
-            }).let(compositeDisposable::add)
+        if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
+            getPictureUseCase.execute(Api.API_KEY, searchPhrase = searchPhrase, Api.LIMIT, currentPage)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { _isLoading.value = true }
+                .doFinally { _isLoading.value = false }
+                .subscribe({
+                    onResponse(mapDataToUi(it.data))
+                    totalItemCount = it.pagination.total_count
+                    currentPage++
+                }, {
+                    onFailure()
+                }).let(compositeDisposable::add)
+        }
     }
 
     private fun onFailure() {
@@ -82,10 +83,5 @@ abstract class BaseViewModel(
         currentPage = 1
         _pictureList.postValue(arrayListOf())
         phraseSearch?.let { getGifsByPhrase(it) }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 }

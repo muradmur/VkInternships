@@ -11,6 +11,7 @@ interface Api {
         @Query("api_key") apiKey: String,
         @Query("q") searchPhrase: String,
         @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
     ): Single<com.example.domain.model.GifResponse>
 
     companion object {

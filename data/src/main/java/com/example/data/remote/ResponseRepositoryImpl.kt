@@ -10,8 +10,8 @@ class ResponseRepositoryImpl @Inject constructor (
     private val api: Api,
 ) : ResponseRepository {
 
-    override fun getGifByPhrase(apiKey: String, searchPhrase: String, limit: Int): Single<GifResponse> =
-        api.getGifByPhrase(apiKey, searchPhrase, limit).map {
+    override fun getGifByPhrase(apiKey: String, searchPhrase: String, limit: Int, offset: Int): Single<GifResponse> =
+        api.getGifByPhrase(apiKey, searchPhrase, limit, offset).map {
             GifResponse(
                 data = it.data,
                 pagination = it.pagination
