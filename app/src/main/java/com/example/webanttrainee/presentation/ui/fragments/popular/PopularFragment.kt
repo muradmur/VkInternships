@@ -59,6 +59,7 @@ class PopularFragment : BaseFragment<ContentFragmentBinding, PopularViewModel>(
     private fun setupListeners() {
         binding.refreshLayout.setOnRefreshListener { viewModel.refresh() }
         binding.recycler.addOnScrollListener(onScrollListener())
+//        binding.searchView.setOnQueryTextListener(OnQueryTextListener())
     }
 
     private fun initRecycler() {
