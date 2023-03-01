@@ -1,5 +1,6 @@
 package com.example.webanttrainee.presentation.ui.base
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,6 @@ import com.example.webanttrainee.presentation.ui.mapper.mapDataToUi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.Collections.addAll
 
 abstract class BaseViewModel(
     private val getPictureUseCase: GetPictureUseCase,
@@ -31,22 +31,40 @@ abstract class BaseViewModel(
     private var currentPage = 1
     private var totalItemCount: Int = 2
     private val compositeDisposable = CompositeDisposable()
+    var phraseSearch: String? = "american psycho"
 
     fun getImages() {
         if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
-            getPictureUseCase.execute(Api.API_KEY, searchPhrase = "american psycho", Api.LIMIT)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { _isLoading.value = true }
-                .doFinally { _isLoading.value = false }
-                .subscribe({
-                    onResponse(mapDataToUi(it.data))
-                    totalItemCount = it.pagination.total_count
-                    currentPage++
-                }, {
-                    onFailure()
-                }).let(compositeDisposable::add)
+            phraseSearch?.let { it ->
+                getPictureUseCase.execute(Api.API_KEY, searchPhrase = it, Api.LIMIT)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { _isLoading.value = true }
+                    .doFinally { _isLoading.value = false }
+                    .subscribe({
+                        onResponse(mapDataToUi(it.data))
+                        totalItemCount = it.pagination.total_count
+                        currentPage++
+                    }, {
+                        onFailure()
+                    }).let(compositeDisposable::add)
+            }
         }
+    }
+
+    private fun getGifsByPhrase(searchPhrase: String) {
+        getPictureUseCase.execute(Api.API_KEY, searchPhrase = searchPhrase, Api.LIMIT)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { _isLoading.value = true }
+            .doFinally { _isLoading.value = false }
+            .subscribe({
+                onResponse(mapDataToUi(it.data))
+                totalItemCount = it.pagination.total_count
+                currentPage++
+            }, {
+                onFailure()
+            }).let(compositeDisposable::add)
     }
 
     private fun onFailure() {
@@ -63,6 +81,11 @@ abstract class BaseViewModel(
     fun refresh() {
         currentPage = 1
         _pictureList.postValue(arrayListOf())
-        getImages()
+        phraseSearch?.let { getGifsByPhrase(it) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }

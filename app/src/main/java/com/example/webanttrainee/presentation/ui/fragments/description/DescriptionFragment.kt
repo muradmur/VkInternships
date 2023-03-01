@@ -1,12 +1,15 @@
 package com.example.webanttrainee.presentation.ui.fragments.description
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.DescriptionFragmentBinding
 
 class DescriptionFragment : Fragment() {

@@ -2,9 +2,11 @@ package com.example.webanttrainee.presentation.ui.fragments.new_
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ContentFragmentBinding
 import com.example.webanttrainee.presentation.ui.adapters.PictureAdapter
 import com.example.webanttrainee.presentation.ui.base.BaseFragment
@@ -53,6 +55,7 @@ class NewFragment : BaseFragment<ContentFragmentBinding, NewViewModel>(
     private fun setupListeners() {
         binding.refreshLayout.setOnRefreshListener { viewModel.refresh() }
         binding.recycler.addOnScrollListener(onScrollListener())
+        binding.searchView.setOnQueryTextListener(OnQueryTextListener())
     }
 
     private fun initRecycler() = with(binding) {

@@ -1,9 +1,8 @@
 package com.example.webanttrainee.presentation.ui.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,12 +25,26 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
         return binding.root
     }
 
+    fun OnQueryTextListener() = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            viewModel.phraseSearch = query ?: ""
+            viewModel.refresh()
+            return false
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+    }
+
     fun onScrollListener() = object : RecyclerView.OnScrollListener() {
+        // Todo: скрытие серчбара при скроле как я понял лучше всего
+        //  реализовать с помощью координейшен лаяута, ноооо это на потом
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             val lastVisibleItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
             val totalItemsCount = recyclerView.adapter?.itemCount ?: 0
-            if (totalItemsCount - lastVisibleItem <= 20) {
+            if (totalItemsCount - lastVisibleItem <= 25) {
                 viewModel.getImages()
             }
         }
