@@ -1,5 +1,6 @@
 package com.example.webanttrainee.presentation.ui.base
 
+import android.view.Menu
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -52,22 +53,22 @@ abstract class BaseViewModel(
         }
     }
 
-//    fun getGifsByPhrase(searchPhrase: String) {
-//        if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
-//            getPictureUseCase.execute(Api.API_KEY, searchPhrase = searchPhrase, Api.LIMIT)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe { _isLoading.value = true }
-//                .doFinally { _isLoading.value = false }
-//                .subscribe({
-//                    onResponse(mapDataToUi(it.data))
-//                    totalItemCount = it.pagination.total_count
-//                    currentPage++
-//                }, {
-//                    onFailure()
-//                }).let(compositeDisposable::add)
-//        }
-//    }
+    fun getGifsByPhrase(searchPhrase: String) {
+        if (!isLoading.value!! && (pictureList.value?.size ?: 0) < totalItemCount) {
+            getPictureUseCase.execute(Api.API_KEY, searchPhrase = searchPhrase, Api.LIMIT)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { _isLoading.value = true }
+                .doFinally { _isLoading.value = false }
+                .subscribe({
+                    onResponse(mapDataToUi(it.data))
+                    totalItemCount = it.pagination.total_count
+                    currentPage++
+                }, {
+                    onFailure()
+                }).let(compositeDisposable::add)
+        }
+    }
 
     private fun onFailure() {
         _isRefreshing.value = false

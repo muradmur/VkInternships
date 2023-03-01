@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.ActivityMainBinding
 import com.example.webanttrainee.presentation.ui.base.BaseViewModel
+import com.example.webanttrainee.presentation.ui.fragments.new_.NewViewModel
 import com.example.webanttrainee.presentation.ui.fragments.popular.PopularViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private val topLevelDestinations = setOf(R.id.newFragment, R.id.popularFragment)
     private val compositeDisposable = CompositeDisposable()
 
-    private val vm by viewModels<MainActivityViewModel>()
+    private val vm by viewModels<NewViewModel>()
 
     private fun isStartDestination(destination: NavDestination?): Boolean {
         if (destination == null) return false
@@ -58,35 +59,58 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.toolbar_menu, menu)
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//
+//        val observable = Observable.create<String> { subscriber ->
+//            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//                override fun onQueryTextChange(newText: String?): Boolean {
+//                    subscriber.onNext(newText!!)
+//                    return false
+//                }
+//
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    subscriber.onNext(query!!)
+//                    return false
+//                }
+//            })
+//        }
+//            .map { text -> text.lowercase().trim() }
+//            .debounce(250, TimeUnit.MILLISECONDS)
+//            .filter { text -> text.isNotBlank() }
+//            .distinctUntilChanged()
+//            .subscribe { text ->
+//                Log.d("TAG", "subscriber: $text")
+//                vm.getGifsByPhrase(text)
+//            }
+//
+//        compositeDisposable.add(observable)
+//        return true
+//    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
-        val observable = Observable.create<String> { subscriber ->
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    subscriber.onNext(newText!!)
-                    return false
-                }
-
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    subscriber.onNext(query!!)
-                    return false
-                }
-            })
-        }
-            .map { text -> text.lowercase().trim() }
-            .debounce(250, TimeUnit.MILLISECONDS)
-            .filter { text -> text.isNotBlank() }
-            .distinctUntilChanged()
-            .subscribe { text ->
-                Log.d("TAG", "subscriber: $text")
-//                vm.getGifsByPhrase(text)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
             }
 
-        compositeDisposable.add(observable)
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query?.isNotBlank() == true) {
+                    vm.getGifsByPhrase(query)
+                    Log.d("query", "$query")
+                }
+                return false
+            }
+        })
+
         return true
     }
 

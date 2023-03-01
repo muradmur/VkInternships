@@ -53,6 +53,8 @@ class NewFragment : BaseFragment<ContentFragmentBinding, NewViewModel>(
     private fun setupListeners() {
         binding.refreshLayout.setOnRefreshListener { viewModel.refresh() }
         binding.recycler.addOnScrollListener(onScrollListener())
+
+//        binding.searchView.setOnQueryTextListener()
     }
 
     private fun initRecycler() = with(binding) {
