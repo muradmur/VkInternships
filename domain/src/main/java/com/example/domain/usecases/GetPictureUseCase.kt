@@ -9,7 +9,7 @@ class GetPictureUseCase @Inject constructor (
     private val responseRepository: ResponseRepository
 ) {
 
-    fun execute(apiKey: String, searchPhrase: String, limit: Int): Single<GifResponse> {
-        return responseRepository.getGifByPhrase(apiKey, searchPhrase, limit)
+    fun execute(apiKey: String, searchPhrase: String, limit: Int, offset: Int): Single<GifResponse> {
+        return responseRepository.getGifByPhrase(apiKey, searchPhrase, limit, offset)
     }
 }

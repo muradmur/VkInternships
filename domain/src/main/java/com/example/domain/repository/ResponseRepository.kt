@@ -5,5 +5,5 @@ import io.reactivex.Single
 
 interface ResponseRepository {
 
-    fun getGifByPhrase (apiKey: String, searchPhrase: String, limit: Int): Single<GifResponse>
+    fun getGifByPhrase (apiKey: String, searchPhrase: String, limit: Int, offset: Int): Single<GifResponse>
 }
