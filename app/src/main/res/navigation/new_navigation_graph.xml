@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/newFragment"
         android:name="com.example.webanttrainee.presentation.ui.fragments.new_.NewFragment"
-        android:label="New"
+        android:label="Search and display"
         tools:layout="@layout/content_fragment">
         <action
             android:id="@+id/action_newFragment_to_descriptionNewFragment"
@@ -19,7 +19,7 @@
         android:id="@+id/descriptionFragment"
         android:name="com.example.webanttrainee.presentation.ui.fragments.description.DescriptionFragment"
         tools:layout="@layout/description_fragment"
-        android:label="">
+        android:label="Description">
         <argument
             android:name="data"
             app:argType="com.example.data.model.Data" />
