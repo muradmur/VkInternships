@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private val topLevelDestinations = setOf(R.id.newFragment, R.id.popularFragment)
+    private val topLevelDestinations = setOf(R.id.newFragment)
 
     private fun isStartDestination(destination: NavDestination?): Boolean {
         if (destination == null) return false
@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         navController = findNavController(R.id.fragmentContainerView)
-        binding.bottomNav.setupWithNavController(navController)
         setupActionBarWithNavController(
             navController, AppBarConfiguration(topLevelDestinations)
         )
