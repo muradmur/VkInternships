@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.data.model.Data
 import com.example.webanttrainee.R
 import com.example.webanttrainee.databinding.DescriptionFragmentBinding
 
